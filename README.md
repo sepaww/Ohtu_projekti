@@ -45,7 +45,7 @@ Reportin voi lukea _htmlcov_-hakemistosta tai terminaalista.
 
 ### Pylint
 
-pelin koodin pelilogiikan laatua voi tarkastella komennolla
+Sovelluksen koodin laatua voi tarkastella komennolla
 
 ```bash
 poetry run invoke lint
