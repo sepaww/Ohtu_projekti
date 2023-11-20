@@ -1,0 +1,7 @@
+[run]
+branch = True
+omit =
+    */__init__.py
+    */site-packages/*
+    */venv/*
+    *__version__.py
