@@ -2,11 +2,11 @@ from flask import jsonify, request, Flask
 from bibrepository import BibRepository
 
 app = Flask(__name__)
-
 ref = [
-    { 'title': 'moi', 'author': "testi" }
+    { 'title': 'Kirja1', 'author': "Kirjailija1" }, 
+    { 'title': 'Kirja2', 'author': "Kirjailija2" }
 ]
-
+CORS(app)
 
 @app.route('/api/refs')
 def get_refs():
