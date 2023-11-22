@@ -1,5 +1,6 @@
 from flask import jsonify, request, Flask
 from bibrepository import BibRepository
+from flask_cors import CORS
 
 app = Flask(__name__)
 ref = [
