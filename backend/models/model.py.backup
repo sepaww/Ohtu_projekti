@@ -7,6 +7,9 @@ class Author:
         self.middle = middle
         self.last = last
 
+    def __str__(self) -> str:
+        return self.first + ' ' + self.middle + ' ' + self.last
+
 
 class Entry:
     def __init__(self, citekey: str, author: str, title: str, year: str) -> None:
@@ -81,9 +84,9 @@ class Article(Entry):
         super().__init__(citekey, author, title, year)
 
         self.journal = journal
-        self.volume = self._validate_volume(volume)
+        self.volume = self._validate_volume(volume) if volume is not None else None
         self.number = number
-        self.pages = self._validate_pages(pages)
+        self.pages = self._validate_pages(pages) if pages is not None else None
 
     def _validate_volume(self, value: str) -> int:
         if re.match("\d+", value):
