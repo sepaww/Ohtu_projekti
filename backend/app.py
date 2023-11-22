@@ -3,14 +3,16 @@ from flask import jsonify, request, Flask
 
 app = Flask(__name__)
 
-@app.route("/", method=["POST"])
-def create_reference():
-    if request.method == "POST":
-        return
+ref = [
+    { 'title': 'moi', 'author': "testi" }
+]
 
 
-@app.route("/", method=["GET"])
-def get_references():
-    if request.method == "POST":
-    
-        return jsonify()
+@app.route('/api/refs')
+def get_refs():
+    return jsonify(ref)
+
+@app.route('/api/refs', methods=['POST'])
+def add_refs():
+    ref.append(request.get_json())
+    return '', 204

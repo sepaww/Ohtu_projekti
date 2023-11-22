@@ -1,0 +1,12 @@
+GET http://localhost:5000/api/refs
+Content-Type: application/json
+
+###
+
+POST http://localhost:5000/api/refs
+Content-Type: application/json
+
+{
+    "author" :"moi",
+    "title": "moi2"
+}
