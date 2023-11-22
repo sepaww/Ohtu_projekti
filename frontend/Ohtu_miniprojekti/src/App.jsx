@@ -11,7 +11,7 @@ function App () {
     )}, [])
   console.log(refs)
   return (
-    <Container className='lg'> 
+    <Container className='lg px-2'> 
       <Mainbar/>
       <RefForm/>
       { refs.map((d) => <div key={d.title} ><h6> Reference </h6>  Title: {d.title} Author: {d.author} </div>)}

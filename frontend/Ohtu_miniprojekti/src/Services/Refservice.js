@@ -8,4 +8,19 @@ const getAll = async () => {
   return response.data
 }
 
-export default {getAll}
+const postNew = async (object) => {
+  console.log(object)
+  const ConfigHeaders = {
+    "content-type": "application/json"
+  }
+  console.log(object)
+  const response = await axios({url: baseUrl,
+                          method: "post",
+                          data: object,
+                          headers: ConfigHeaders
+                          })
+  console.log(response)
+  return response.data
+}
+
+export default {getAll, postNew}
