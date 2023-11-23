@@ -1,5 +1,5 @@
 from app import db
-from model import *
+from models.bib import Article
 
 
 class BibRepository:
@@ -8,11 +8,7 @@ class BibRepository:
         db.session.commit()
 
     def all(self) -> list[Article]:
-        return db.session.execute(db.select(Article)).scalars()
-
-    def _reset(self) -> None:
-        db.drop_all()
-        db.create_all()
+        return db.session.execute(db.select(Article)).scalars().all()
 
 
 bib_repository = BibRepository()
