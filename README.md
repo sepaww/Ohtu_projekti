@@ -5,6 +5,38 @@
 
 [Product Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/simonena_ad_helsinki_fi/Ed88uF9sw4xFoWAGecS_zvIBGAcMHuNmpuXQZrrZfnn-5g)
 
+## Käyttöohjeet
+
+1. Asenna riippuvuudet komennolla
+
+```bash
+poetry install
+```
+
+2. Käynnistä backend
+
+```bash
+poetry shell
+```
+
+```bash
+python3 backend/run.py
+```
+
+3. Käynnistä frontend
+Navigoi hakemistoon frontend
+Suorita komennot
+
+```bash
+npm install
+```
+
+```bash
+npm start
+```
+Linkki sovellukseen:
+http://localhost:5173/
+
 
 ## Definition of done
 
