@@ -13,7 +13,7 @@ function App () {
   return (
     <Container className='lg px-2'> 
       <Mainbar/>
-      <RefForm/>
+      <RefForm setRefs={setRefs} refs={refs}/>
       { refs.map((d) => <div key={d.Title} ><h6> Reference </h6>  Title: {d.Title} Author: {d.Author} </div>)}
     </Container>
   )

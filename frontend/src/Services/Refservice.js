@@ -20,7 +20,7 @@ const postNew = async (object) => {
                           headers: ConfigHeaders
                           })
   console.log(response)
-  return response.data
+  return response
 }
 
 export default {getAll, postNew}

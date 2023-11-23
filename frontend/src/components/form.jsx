@@ -28,14 +28,18 @@ const Typeselect = () => {
   </div>)
 }
 
-const RefForm = () => {
-    const handleSubmit = (event)   => {
+const RefForm = ({setRefs, refs}) => {
+    const handleSubmit =  async(event)   => {
       event.preventDefault()
       const form = event.target
       const formData = new FormData(form)
       const formJson = Object.fromEntries(formData.entries());
-      console.log(formJson);
-      refservice.postNew(formJson)
+      const response = await refservice.postNew(formJson)
+      if (response.status === 204) {
+        setRefs(refs.concat(formJson))
+      }
+  
+
     }
     const inputs = [
           {type: "Title", text:"Example Title"}, 
