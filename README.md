@@ -1,4 +1,8 @@
 # Ohtu_projekti
+
+![GHA_workflow_badge](https://github.com/sepaww/Ohtu_projekti/workflows/CI/badge.svg)
+
+
 [Product Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/simonena_ad_helsinki_fi/Ed88uF9sw4xFoWAGecS_zvIBGAcMHuNmpuXQZrrZfnn-5g)
 
 
