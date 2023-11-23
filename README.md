@@ -32,7 +32,7 @@ npm install
 ```
 
 ```bash
-npm start
+npm run dev
 ```
 Linkki sovellukseen:
 http://localhost:5173/
