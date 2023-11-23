@@ -14,7 +14,7 @@ function App () {
     <Container className='lg px-2'> 
       <Mainbar/>
       <RefForm/>
-      { refs.map((d) => <div key={d.title} ><h6> Reference </h6>  Title: {d.title} Author: {d.author} </div>)}
+      { refs.map((d) => <div key={d.Title} ><h6> Reference </h6>  Title: {d.Title} Author: {d.Author} </div>)}
     </Container>
   )
 }

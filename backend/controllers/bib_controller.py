@@ -4,14 +4,21 @@ from models.bib import Article
 
 bib_controller = Blueprint("bib", __name__)
 
+data =[{
+    "Title": "esimerkki",
+    "Author": "Visa",
+    "Journal": "HS ",
+    "type": "Journal"
+}]
 
 @bib_controller.route("/api/refs")
 def get_refs():
-    refs = bib_repository.all()
-    if refs:
-        return jsonify(refs)
-    else:
-        return jsonify({"error": "No references found"}), 404
+    #refs = bib_repository.all()
+    return jsonify(data)
+    #if refs:
+    #    return jsonify(refs)
+    #else:
+    #    return jsonify({"error": "No references found"}), 404
 
 
 @bib_controller.route("/api/refs", methods=["POST"])
