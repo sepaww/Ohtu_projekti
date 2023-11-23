@@ -23,6 +23,7 @@ def get_refs():
 
 @bib_controller.route("/api/refs", methods=["POST"])
 def add_refs():
-    ref = json.loads(request.get_json())
-    bib_repository.save(Article(**ref))
-    return "", 204
+   # ref = json.loads(request.get_json())
+   # bib_repository.save(Article(**ref))
+   data.append(request.get_json())
+   return "", 204
