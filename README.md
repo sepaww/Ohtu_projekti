@@ -24,8 +24,8 @@ python3 backend/run.py
 ```
 
 3. Käynnistä frontend
-Navigoi hakemistoon frontend
-Suorita komennot
+- Navigoi hakemistoon frontend
+- Suorita komennot
 
 ```bash
 npm install
