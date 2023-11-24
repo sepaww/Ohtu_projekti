@@ -1,16 +1,33 @@
+import os  # flask will load .env automatically
 from flask import Flask
-from database import db
 from flask_cors import CORS
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+db = SQLAlchemy(model_class=Base)
+migrate = Migrate()
+
+import models  # needed for database schema initialization
 from controllers.bib_controller import bib_controller
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        static_url_path="",
+        static_folder="../client/build",
+        template_folder="../client/build",
+    )
 
-    app.config[
-        "SQLALCHEMY_DATABASE_URI"
-    ] = "postgresql://postgres:postgres@localhost/postgres"
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
     db.init_app(app)
+    migrate.init_app(app, db)
 
     app.register_blueprint(bib_controller)
 

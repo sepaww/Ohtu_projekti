@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
 import { Form, InputGroup, Stack, Button} from "react-bootstrap";
-import refservice from "../Services/refservice";
+import refservice from "../Services/Refservice";
 
 const Inputfield = ({ input }) => {
   return(
     <div> 
        <InputGroup size="sm" className="mb-2">
-            <InputGroup.Text id="inputGroup-sizing-sm"> {input.type}</InputGroup.Text>
+            <InputGroup.Text id="inputGroup-sizing-sm" style={{ textTransform: 'capitalize' }}>{input.name}</InputGroup.Text>
             <Form.Control
-              placeholder={input.text}
+              placeholder={input.placeholder}
               aria-label="Small"
               aria-describedby="inputGroup-sizing-sm"
-              name={input.type}
+              name={input.name}
             />
           </InputGroup>
         <InputGroup size="sm" className="mb-2"></InputGroup>
@@ -35,22 +35,22 @@ const RefForm = ({setRefs, refs}) => {
       const formData = new FormData(form)
       const formJson = Object.fromEntries(formData.entries());
       const response = await refservice.postNew(formJson)
-      if (response.status === 204) {
+      if (response.status === 201) {
         setRefs(refs.concat(formJson))
       }
   
 
     }
     const inputs = [
-          {type: "Title", text:"Example Title"}, 
-          {type: "Author", text:"Example Author"}, 
-          {type: "Journal", text:"Journal Name"}
+          {name: "title", placeholder:"Example Title"}, 
+          {name: "author", placeholder:"Example Author"}, 
+          {name: "journal", placeholder:"Journal Name"}
         ]
     
     return (
         <Form method="post" onSubmit={handleSubmit}> 
             <Stack className="col-md-5 mx-left" gap="3">
-              {inputs.map((input) => <Inputfield key={input.type} input={input}> </Inputfield>)}
+              {inputs.map((input) => <Inputfield key={input.name} input={input}> </Inputfield>)}
             <Typeselect/>
             </Stack>
             <Button type="submit">Submit Reference</Button>

@@ -1,29 +1,27 @@
-from flask import jsonify, json, request, Blueprint
-from repositories.bibrepository import bib_repository
-from models.bib import Article
+import random
+from flask import jsonify, request, Blueprint
+from models.article import Article
 
 bib_controller = Blueprint("bib", __name__)
 
-data =[{
-    "Title": "esimerkki",
-    "Author": "Visa",
-    "Journal": "HS ",
-    "type": "Journal"
-}]
+data = [{"Title": "esimerkki", "Author": "Visa", "Journal": "HS ", "type": "Journal"}]
+
 
 @bib_controller.route("/api/refs")
 def get_refs():
-    #refs = bib_repository.all()
-    return jsonify(data)
-    #if refs:
-    #    return jsonify(refs)
-    #else:
-    #    return jsonify({"error": "No references found"}), 404
+    return Article.all(), 200
 
 
 @bib_controller.route("/api/refs", methods=["POST"])
 def add_refs():
-   # ref = json.loads(request.get_json())
-   # bib_repository.save(Article(**ref))
-   data.append(request.get_json())
-   return "", 204
+    payload = request.get_json()
+    new = Article(
+        citekey=str(random.randint(0, 10000)),
+        author=payload["author"],
+        title=payload["title"],
+        year=str(random.randint(0, 1000)),
+        journal=payload["journal"],
+    )
+    new.save()
+
+    return jsonify(new), 201
