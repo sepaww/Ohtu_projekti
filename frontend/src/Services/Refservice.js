@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://127.0.0.1:5000/api/refs'
+const baseUrl = '/api/refs'
 
 const getAll = async () => {
   const request = axios.get(baseUrl)
