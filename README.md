@@ -5,7 +5,10 @@
 
 [Product Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/simonena_ad_helsinki_fi/Ed88uF9sw4xFoWAGecS_zvIBGAcMHuNmpuXQZrrZfnn-5g)
 
-## Käyttöohjeet
+## [Linkki sovellukseen](https://bibmanager.onrender.com/index.html)
+
+
+## Käyttöohjeet kehittäjille
 
 1. Asenna riippuvuudet komennolla
 
@@ -13,26 +16,28 @@
 poetry install
 ```
 
-2. Käynnistä backend
+2. Päivitä tietokanta ja käynnistä backend
 
 ```bash
 poetry shell
 ```
 
 ```bash
-python3 backend/run.py
+cd backend && flask --app app db upgrade && cd ..
+```
+
+```bash
+flask run --debug
 ```
 
 3. Käynnistä frontend
-- Navigoi hakemistoon frontend
-- Suorita komennot
 
 ```bash
-npm install
+npm install --prefix frontend
 ```
 
 ```bash
-npm run dev
+npm run dev --prefix frontend
 ```
 Linkki sovellukseen:
 http://localhost:5173/
