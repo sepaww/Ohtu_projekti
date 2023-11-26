@@ -58,7 +58,7 @@ const RefForm = ({setRefs, refs}) => {
       {name: "year", placeholder: "Year published"},
       {name: "volume", placeholder: ""},
       {name: "nuber", placeholder: "6"},
-      {name: "pages", placeholder: "111-222"},
+      {name: "pages", placeholder: "111-222 or 111,222"},
       {name: "publisher", placeholder: "WSOY AB"},
       {name: "adress", placeholder: "Mannerheimintie 1"},
       {name: "howpubluihsed", placeholder: "Distributed in unicafe"}, 
@@ -67,7 +67,7 @@ const RefForm = ({setRefs, refs}) => {
     ]
     const inputs = {
       Book: [fields[1], fields[0],fields[7],fields[8], fields[3]], 
-      Article: [fields[0], fields[1],fields[5],fields[6]],
+      Article: [fields[0], fields[1], fields[2], fields[3],fields[5],fields[6]],
       Booklet: [fields[0], fields[1],fields[9], fields[10], fields[6]],
       MasterThesis: [fields[0], fields[1],fields[11], fields[6], fields[7], fields[10]]
       }
@@ -77,10 +77,18 @@ const RefForm = ({setRefs, refs}) => {
       
         <Form method="post" onSubmit={handleSubmit}> 
         <Typeselect setRefType={setRefType}/>
-            <Stack className="col-md-5 mx-left" gap="3">
-              {reftype ? inputs[reftype].map((input) => <Inputfield key={input.name} input={input}> </Inputfield>) : <h5> Start by selecting ref type</h5>}
+            <Stack className="col-md-6" gap="3">
+              {
+              reftype ? 
+              inputs[reftype].map((input) => <Inputfield key={input.name} input={input}> </Inputfield>) : 
+              <h5> Start by selecting ref type</h5>
+              }
             </Stack>
-            <Button type="submit">Submit Reference</Button>
+            {
+            reftype? 
+            <Button type="submit">Submit Reference</Button> : 
+            <Button disabled type="submit">Select to Submit</Button>
+            }
 
         </Form>
     )
