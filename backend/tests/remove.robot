@@ -16,5 +16,5 @@ User can remove added entries
     END
     ${rows}=    Get Element Count    //table[@id="entrylist"]/tbody/tr
     ${rows_int}=  Convert To String  ${rows}
-    Should Be Equal   11  ${rows_int}
+    Should Be Equal   0  ${rows_int}
 
