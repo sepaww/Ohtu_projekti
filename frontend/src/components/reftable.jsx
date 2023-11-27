@@ -19,7 +19,7 @@ const Reftable = ({references}) => {
     const reference = references[0]
     console.log(reference)
     if (!reference)
-    return <div> loadinng... </div>
+        return <div> loadinng... </div>
     return (
         <Table id='entrylist'> 
             <thead> 
