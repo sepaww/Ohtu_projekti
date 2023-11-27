@@ -57,7 +57,7 @@ const RefForm = ({setRefs, refs}) => {
       {name: "journal", placeholder:"Journal Name"},
       {name: "year", placeholder: "Year published"},
       {name: "volume", placeholder: ""},
-      {name: "nuber", placeholder: "6"},
+      {name: "number", placeholder: "6"},
       {name: "pages", placeholder: "111-222 or 111,222"},
       {name: "publisher", placeholder: "WSOY AB"},
       {name: "adress", placeholder: "Mannerheimintie 1"},

@@ -21,7 +21,7 @@ const Reftable = ({references}) => {
     if (!reference)
     return <div> loadinng... </div>
     return (
-        <Table> 
+        <Table id='entrylist'> 
             <thead> 
                 <tr>
                     {rows2.map((r) => <th key={r}>{r}</th>)}
