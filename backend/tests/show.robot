@@ -18,10 +18,10 @@ User can select any of the given type
 User can see added entries
     Add Premade Article
     Add Another Premade Article
-    ${rows}=    Get Element Count    //table[@id="entrylist"]/tbody/tr    # //table[@id="Session Details"]/tbody/tr[position()>1]
+    ${rows}=    Get Element Count    //table[@id="entrylist"]/tbody/tr
     Should Be Equal  ${rows}   2
     
-    # ${row}= \ \ \ Get WebElement \ \ \ //table[@id="Session Details"]/tbody/tr[${row_num}]
+    
     @{cells}=    Get WebElements    //table[@id="entrylist"]/tbody/tr[1]
     ${data}=    Create List
     FOR    ${cell}    IN    @{cells}
