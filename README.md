@@ -43,6 +43,15 @@ Linkki sovellukseen:
 http://localhost:5173/
 
 
+## Pylint
+
+Tiedoston .pylintrc määrittelemät tarkistukset suoritetaan komennolla:
+
+```bash
+poetry run pylint backend
+```
+
+
 ## Definition of done
 
 User story on valmis kun
