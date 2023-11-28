@@ -1,14 +1,16 @@
 from flask import jsonify, request, Blueprint
 from services.data_service import DataService
+from models.article import get_schema
 
 bib_controller = Blueprint("bib", __name__)
 
 data = [{"Title": "esimerkki", "Author": "Visa", "Journal": "HS ", "type": "Journal"}]
 data_service = DataService()
 
+
 @bib_controller.route("/api/refs")
 def get_refs():
-    return data_service.get_all(), 200
+    return {"refs": data_service.get_all(), "form": get_schema()}, 200
 
 
 @bib_controller.route("/api/refs", methods=["POST"])

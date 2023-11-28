@@ -19,7 +19,7 @@ const Inputfield = ({ input }) => {
     </div>
   )
 }
-const Typeselect = ({setRefType}) => {
+const Typeselect = ({setRefType, entryTypes}) => {
   const types = ["Book", "Article", "Booklet", "MasterThesis"]
   // this prevents a bug if you choose select type to start again 
   const setTypeCorrect = (target) => {
@@ -34,12 +34,12 @@ const Typeselect = ({setRefType}) => {
   <div> 
     <Form.Select aria-label="Ref type select" name="type" size="lg" className="m-2" onChange={(e) => setTypeCorrect(e.target.value)}>
       <option value={"reset"}> Select Type to start</option>
-      {types.map((t) => <option value={t} key={t}>{t}</option>)}
+      {entryTypes.map((t) => <option value={t} key={t}>{t}</option>)}
     </Form.Select>
   </div>)
 }
 
-const RefForm = ({setRefs, refs}) => {
+const RefForm = ({setRefs, refs, entryTypes}) => {
     const [reftype, setRefType] = useState(false)
     const handleSubmit =  async(event)   => {
       event.preventDefault()
@@ -52,6 +52,7 @@ const RefForm = ({setRefs, refs}) => {
       }
     }
     const fields = [
+      {name: "citekey", placeholder:"\\cite{key}"},
       {name: "title", placeholder:"Example Title"}, 
       {name: "author", placeholder:"Example Author"}, 
       {name: "journal", placeholder:"Journal Name"},
@@ -61,26 +62,25 @@ const RefForm = ({setRefs, refs}) => {
       {name: "pages", placeholder: "111-222 or 111,222"},
       {name: "publisher", placeholder: "WSOY AB"},
       {name: "adress", placeholder: "Mannerheimintie 1"},
-      {name: "howpubluihsed", placeholder: "Distributed in unicafe"}, 
+      {name: "howpublished", placeholder: "Distributed in unicafe"}, 
       {name: "Month", placeholder: "Jan"},
       {name: "School", placeholder: "Uni Of Helsingi"}
     ]
     const inputs = {
-      Book: [fields[1], fields[0],fields[7],fields[8], fields[3]], 
-      Article: [fields[0], fields[1], fields[2], fields[3],fields[5],fields[6]],
-      Booklet: [fields[0], fields[1],fields[9], fields[10], fields[6]],
-      MasterThesis: [fields[0], fields[1],fields[11], fields[6], fields[7], fields[10]]
+      book: [fields[1], fields[0],fields[7],fields[8], fields[3]], 
+      article: [fields[0], fields[1], fields[2], fields[3],fields[5],fields[6]],
+      booklet: [fields[0], fields[1],fields[9], fields[10], fields[6]],
+      masterthesis: [fields[0], fields[1],fields[11], fields[6], fields[7], fields[10]]
       }
-    console.log(reftype)
 
     return (
       
         <Form method="post" onSubmit={handleSubmit}> 
-        <Typeselect setRefType={setRefType}/>
+        <Typeselect setRefType={setRefType} entryTypes={Object.keys(entryTypes)}/>
             <Stack className="col-md-6" gap="3">
               {
               reftype ? 
-              inputs[reftype].map((input) => <Inputfield key={input.name} input={input}> </Inputfield>) : 
+              entryTypes[reftype].map((input) => <Inputfield key={input} input={fields.find(o => o.name === input)}> </Inputfield>) : 
               <h5> Start by selecting ref type</h5>
               }
             </Stack>

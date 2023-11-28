@@ -6,14 +6,18 @@ import Reftable from './components/reftable'
 import refservice from './Services/Refservice'
 function App () {
   const [refs, setRefs] = useState([])
+  const [entryTypes, setEntryTypes] = useState([])
   useEffect(() =>  {
     refservice.getAll()
-    .then((data) => setRefs(data)
-    )}, [])
+    .then((data) => {
+      setRefs(data.refs);
+      setEntryTypes(data.form);
+    })
+  }, [])
   return (
     <Container className='lg px-2'> 
       <Mainbar/>
-      <RefForm setRefs={setRefs} refs={refs}/>
+      <RefForm setRefs={setRefs} refs={refs} entryTypes={entryTypes}/>
       <Reftable references={refs}/>
     </Container>
   )

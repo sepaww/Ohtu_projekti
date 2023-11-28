@@ -1,16 +1,9 @@
-from dataclasses import dataclass
+from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass
 from sqlalchemy.orm import Mapped, mapped_column
 from app import db
 
 
-@dataclass
-class Article(db.Model):
-    citekey: Mapped[str] = mapped_column(db.String, primary_key=True)
-    author: Mapped[str] = mapped_column(db.String, nullable=False)
-    title: Mapped[str] = mapped_column(db.String, nullable=False)
-    year: Mapped[str] = mapped_column(db.String, nullable=False)
-    journal: Mapped[str] = mapped_column(db.String, nullable=False)
-
+class Entry(MappedAsDataclass, DeclarativeBase):
     def save(self):
         db.session.add(self)
         db.session.commit()
@@ -21,4 +14,24 @@ class Article(db.Model):
 
     @classmethod
     def all(cls):
-        return db.session.execute(db.select(Article)).scalars().all()
+        return db.session.execute(db.select(cls)).scalars().all()
+
+
+class Article(Entry):
+    __tablename__ = "article"
+    citekey: Mapped[str] = mapped_column(db.String, primary_key=True)
+    author: Mapped[str] = mapped_column(db.String, nullable=False)
+    title: Mapped[str] = mapped_column(db.String, nullable=False)
+    year: Mapped[str] = mapped_column(db.String, nullable=False)
+    journal: Mapped[str] = mapped_column(db.String, nullable=False)
+
+
+def get_schema():
+    schema = {}
+
+    entrytypes = list(Entry.metadata.tables.keys())
+    for entrytype in entrytypes:
+        fields = Entry.metadata.tables[entrytype].columns.keys()
+        schema[entrytype] = fields
+
+    return schema
