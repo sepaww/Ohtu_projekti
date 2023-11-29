@@ -13,7 +13,6 @@ const postNew = async (object) => {
   const ConfigHeaders = {
     "content-type": "application/json"
   }
-  console.log(object)
   const response = await axios({url: baseUrl,
                           method: "post",
                           data: object,
@@ -23,4 +22,10 @@ const postNew = async (object) => {
   return response
 }
 
-export default {getAll, postNew}
+const deleteRef = async (citekey) => {
+  const response = await axios.delete(`${baseUrl}/${citekey}`)
+  console.log(response)
+  return response
+}
+
+export default {getAll, postNew, deleteRef}

@@ -1,12 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Table, Button, Badge} from "react-bootstrap"
-const Delbutton = () => {
+import refservice from "../Services/Refservice"
+const Delbutton = (citekey) => {
     const handledelete = async () => {
-        // simuloidaan postamiseen menevää aikaa
-        const promise = new Promise((resolve) => {
-            setTimeout(resolve, 350)
-        })
-        await promise 
+        await refservice.deleteRef(citekey.reference)
         console.log("Deleted")
     }
     return (
@@ -16,9 +13,7 @@ const Delbutton = () => {
 
 const Reftable = ({references}) => {
     const rows2 = ["author", "journal", "title", "year",]
-    const reference = references[0]
-    console.log(reference)
-    if (!reference)
+    if (!references)
         return <div> loadinng... </div>
     return (
         <Table striped id="entrylist"> 
@@ -35,7 +30,7 @@ const Reftable = ({references}) => {
                 {       rows2.map((r)=> 
                     <th key={ref[r]}> {ref[r]} </th> )} 
                     <th> 
-                        <Delbutton/> 
+                        <Delbutton reference={ref.citekey}/> 
                     </th>
                     <th> 
                         <Badge bg="secondary" className="p-2"> {ref.citekey}</Badge>

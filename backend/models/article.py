@@ -19,6 +19,7 @@ class Entry(MappedAsDataclass, DeclarativeBase):
     @classmethod
     def delete_by_citekey(cls, citekey):
         article_to_delete = cls.query.get(citekey)
+        print(article_to_delete)
         if article_to_delete:
             article_to_delete.delete()
 
