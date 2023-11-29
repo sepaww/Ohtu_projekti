@@ -34,7 +34,7 @@ jobs:
       - name: Run tests
         run: poetry run coverage run --branch -m pytest
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+          DATABASE_URI: postgresql://postgres:postgres@localhost/postgres
       - name: Lint
         run: poetry run pylint backend
       - name: Install Node
