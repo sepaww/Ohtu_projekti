@@ -37,3 +37,7 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
       - name: Lint
         run: poetry run pylint backend
+      - name: Install Node
+        run: npm install
+      - name: Lint Frontend
+        run: npm run lint --prefix frontend

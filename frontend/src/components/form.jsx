@@ -58,12 +58,12 @@ const RefForm = ({setRefs, refs, entryTypes}) => {
       {name: "Month", placeholder: "Jan"},
       {name: "School", placeholder: "Uni Of Helsingi"}
     ]
-    const inputs = {
-      book: [fields[1], fields[0],fields[7],fields[8], fields[3]], 
-      article: [fields[0], fields[1], fields[2], fields[3],fields[5],fields[6]],
-      booklet: [fields[0], fields[1],fields[9], fields[10], fields[6]],
-      masterthesis: [fields[0], fields[1],fields[11], fields[6], fields[7], fields[10]]
-      }
+    //const inputs = {
+    //  book: [fields[1], fields[0],fields[7],fields[8], fields[3]], 
+    //  article: [fields[0], fields[1], fields[2], fields[3],fields[5],fields[6]],
+    //  booklet: [fields[0], fields[1],fields[9], fields[10], fields[6]],
+    //  masterthesis: [fields[0], fields[1],fields[11], fields[6], fields[7], fields[10]]
+    //  }
 
     return (
       
