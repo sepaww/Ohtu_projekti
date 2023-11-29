@@ -9,7 +9,7 @@ class DataService:
     def save_data(self, payload):
         if payload.pop("type") == "article":
             new = Article(**payload)
-            new.save()            
+            new.save()
             return new
 
     def delete_article(self, citekey):
@@ -17,5 +17,4 @@ class DataService:
             Article.delete_by_citekey(citekey)
             return True
         except Exception as e:
-            return False
-
+            return False, e

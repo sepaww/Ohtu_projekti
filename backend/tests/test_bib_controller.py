@@ -1,9 +1,7 @@
 import unittest
 from flask import Flask, json
 from app import bib_controller, db
-from models.article import Article
-from services.data_service import DataService
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 
 
 class BibControllerTestCase(unittest.TestCase):

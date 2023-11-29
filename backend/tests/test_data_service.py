@@ -1,7 +1,6 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 from services.data_service import DataService, Article
-from controllers.bib_controller import delete_ref
 
 
 class TestDataService(unittest.TestCase):
@@ -47,7 +46,7 @@ class TestDataService(unittest.TestCase):
         data_service = DataService()
         result = data_service.delete_article(citekey="example_citekey")
         mock_delete_by_citekey.assert_called_once_with("example_citekey")
-        self.assertFalse(result)
+        self.assertEqual(str(result), str((False, Exception("Mocked error"))))
 
 
 if __name__ == "__main__":
