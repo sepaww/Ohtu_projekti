@@ -45,3 +45,5 @@ jobs:
         uses: browser-actions/setup-geckodriver@latest
       - name: Run robot tests
         run: bash robot_script.sh
+        env:
+          DATABASE_URI: postgresql://postgres:postgres@localhost/postgres
