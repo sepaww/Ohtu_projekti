@@ -2,6 +2,7 @@
 
 npm install --prefix frontend
 npm run build --prefix frontend
+cd backend && poetry run flask --app app db upgrade && cd ..
 
 poetry run gunicorn --chdir backend -b 127.0.0.1:5173 'app:create_app()' &
 
