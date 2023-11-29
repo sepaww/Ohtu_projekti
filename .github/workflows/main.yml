@@ -44,4 +44,4 @@ jobs:
       - name: Setup geckodriver
         uses: browser-actions/setup-geckodriver@latest
       - name: Run robot tests
-        run: ./robot_script.sh
+        run: bash robot_script.sh
