@@ -15,20 +15,20 @@ class TestDataService(unittest.TestCase):
         self.assertEqual(result, ["article1", "article2", "article3"])
         mock_article.all.assert_called_once()
 
-    @patch("services.data_service.Article")
+    @patch("services.data_service.Article.save")
     def test_save(self, mock_article):
         data_service = DataService()
-        payload = {"title": "example", "author": "Some author", "journal": "HS "}
-        mock_article.return_value = Mock(
-            citekey="123",
-            author="Some author",
-            title="example",
-            year="1999",
-            journal="HS",
-        )
+        payload = {
+            "type": "article",
+            "citekey": "199",
+            "year": "1888",
+            "title": "example",
+            "author": "Some author",
+            "journal": "HS",
+        }
         result = data_service.save_data(payload)
         mock_article.assert_called_once()
-
+        self.assertIsInstance(result, Article)
         self.assertEqual(result.author, "Some author")
         self.assertEqual(result.title, "example")
 
