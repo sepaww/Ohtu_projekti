@@ -32,3 +32,9 @@ def delete_ref(citekey):
             204,
         )
     return jsonify({"message": f"Failed to delete article with citekey."}), 500
+
+
+@bib_controller.route("/test/reset", methods=["GET"])
+def test_reset():
+    data_service.reset()
+    return "Database was reset."

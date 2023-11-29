@@ -1,6 +1,6 @@
 from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass
 from sqlalchemy.orm import Mapped, mapped_column
-from app import db
+from database import db
 
 
 class Entry(MappedAsDataclass, DeclarativeBase):

@@ -19,9 +19,11 @@ User can see added entries
     Add Premade Article
     Add Another Premade Article
     Row Count Should Be  2
-    Check Table Row  1  ['Eminem Jonne Book of rhymes 2 70 Delete 22']
-    Check Table Row  2  ['Eminem Jonne Book of rhymes 3 71 Delete 23']
-    Empty The Table
+    Table Row Should Contain    entrylist    1    Eminem Jonne Book of rhymes 2 70 Delete 22
+    Table Row Should Contain    entrylist    2    Eminem Jonne Book of rhymes 3 71 Delete 23
+    #Check Table Row  1  ['Eminem Jonne Book of rhymes 2 70 Delete 22']
+    #Check Table Row  2  ['Eminem Jonne Book of rhymes 3 71 Delete 23']
+    #Empty The Table
 
 
 

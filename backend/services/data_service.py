@@ -1,4 +1,5 @@
-from models.article import Article, db
+from models.article import Article
+from database import db
 
 
 class DataService:
@@ -21,3 +22,9 @@ class DataService:
 
         except Exception as e:
             return False, e
+
+    def reset(self):
+        allrows = db.session.execute(db.select(Article)).scalars()
+        for row in allrows:
+            db.session.delete(row)
+        db.session.commit()

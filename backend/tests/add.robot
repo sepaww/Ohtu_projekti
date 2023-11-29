@@ -22,7 +22,7 @@ User can add a valid article
     Submit Reference
     Sleep  1
     Row Count Should Be  1
-    Empty The Table
+    #Empty The Table
 
 #User can add a valid Book
 #    Select Book

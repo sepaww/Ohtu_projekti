@@ -41,3 +41,7 @@ jobs:
         run: npm install --prefix frontend
       - name: Lint Frontend
         run: npm run lint --prefix frontend
+      - name: Setup geckodriver
+        uses: browser-actions/setup-geckodriver@latest
+      - name: Run robot tests
+        run: ./robot_script.sh

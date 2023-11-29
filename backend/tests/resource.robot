@@ -1,18 +1,18 @@
 *** Settings ***
 Library  SeleniumLibrary
-
+Library  ./AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5173
 ${DELAY}  0.1 seconds
-${HOME_URL}  http://${SERVER}
+${HOME_URL}  http://${SERVER}/index.html
 
 
 *** Keywords ***
 Open And Configure Browser
-    ${options}  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys
+    ${options}  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys
     #Call Method  ${options}  add_argument  --headless
-    Open Browser  browser=chrome  options=${options}
+    Open Browser  browser=firefox  options=${options}
     Set Selenium Speed  ${DELAY}
 
 
