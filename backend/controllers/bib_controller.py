@@ -30,4 +30,4 @@ def delete_ref(citekey):
             ),
             204,
         )
-    return jsonify({"message": f"Failed to delete article with citekey."}), 500
+    return jsonify({"message": "Failed to delete article with citekey."}), 500

@@ -11,7 +11,7 @@ class Entry(MappedAsDataclass, DeclarativeBase):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-    
+
     @classmethod
     def all(cls):
         return db.session.execute(db.select(cls)).scalars().all()
@@ -21,7 +21,7 @@ class Entry(MappedAsDataclass, DeclarativeBase):
         article_to_delete = cls.query.get(citekey)
         if article_to_delete:
             article_to_delete.delete()
-            
+
 
 class Article(Entry):
     __tablename__ = "article"

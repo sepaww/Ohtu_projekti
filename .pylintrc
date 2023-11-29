@@ -1,7 +1,7 @@
 [MASTER]
 
 ignore=tests, migrations
-
+fail-under=8
 [BASIC]
 
 function-naming-style=snake_case
