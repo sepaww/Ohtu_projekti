@@ -1,4 +1,4 @@
-from models.article import Article
+from models.article import Article, db
 
 
 class DataService:
@@ -14,7 +14,10 @@ class DataService:
 
     def delete_article(self, citekey):
         try:
-            Article.delete_by_citekey(citekey)
-            return True
+            article = db.session.query(Article).filter_by(citekey=citekey).first()
+            if article:
+                article.delete()
+                return True
+
         except Exception as e:
             return False, e

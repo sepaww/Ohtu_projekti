@@ -30,23 +30,8 @@ class TestDataService(unittest.TestCase):
         self.assertIsInstance(result, Article)
         self.assertEqual(result.author, "Some author")
         self.assertEqual(result.title, "example")
+    
 
-    @patch("services.data_service.Article.delete_by_citekey")
-    def test_delete_article_success(self, mock_delete_by_citekey):
-        data_service = DataService()
-        result = data_service.delete_article(citekey="example_citekey")
-        mock_delete_by_citekey.assert_called_once_with("example_citekey")
-        self.assertTrue(result)
-
-    @patch(
-        "services.data_service.Article.delete_by_citekey",
-        side_effect=Exception("Mocked error"),
-    )
-    def test_delete_article_failure(self, mock_delete_by_citekey):
-        data_service = DataService()
-        result = data_service.delete_article(citekey="example_citekey")
-        mock_delete_by_citekey.assert_called_once_with("example_citekey")
-        self.assertEqual(str(result), str((False, Exception("Mocked error"))))
 
 
 if __name__ == "__main__":

@@ -16,13 +16,6 @@ class Entry(MappedAsDataclass, DeclarativeBase):
     def all(cls):
         return db.session.execute(db.select(cls)).scalars().all()
 
-    @classmethod
-    def delete_by_citekey(cls, citekey):
-        article_to_delete = cls.query.get(citekey)
-        print(article_to_delete)
-        if article_to_delete:
-            article_to_delete.delete()
-
 
 class Article(Entry):
     __tablename__ = "article"
