@@ -19,3 +19,15 @@ def add_refs():
     new = data_service.save_data(payload)
 
     return jsonify(new), 201
+
+
+@bib_controller.route("/api/refs/<citekey>", methods=["DELETE"])
+def delete_ref(citekey):
+    if data_service.delete_article(citekey):
+        return (
+            jsonify(
+                {"message": f"Article with citekey {citekey} deleted successfully"}
+            ),
+            204,
+        )
+    return jsonify({"message": f"Failed to delete article with citekey."}), 500
