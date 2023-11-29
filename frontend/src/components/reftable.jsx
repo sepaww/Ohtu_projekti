@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Table, Button } from "react-bootstrap"
+import { Table, Button, Badge} from "react-bootstrap"
 const Delbutton = () => {
     const handledelete = async () => {
         // simuloidaan postamiseen menevää aikaa
@@ -10,21 +10,23 @@ const Delbutton = () => {
         console.log("Deleted")
     }
     return (
-        <Button variant="danger" onClick={handledelete}> Delete </Button>
+        <Button variant="danger" size="sm" onClick={handledelete}> Delete </Button>
     )
 } 
 
 const Reftable = ({references}) => {
-    const rows2 = ["author", "journal", "title", "year"]
+    const rows2 = ["author", "journal", "title", "year",]
     const reference = references[0]
     console.log(reference)
     if (!reference)
         return <div> loadinng... </div>
     return (
-        <Table id='entrylist'> 
+        <Table striped id="entrylist"> 
             <thead> 
                 <tr>
                     {rows2.map((r) => <th key={r}>{r}</th>)}
+                    <th> Delete</th>
+                    <th> Citekey</th>
                 </tr>
             </thead>
             <tbody> 
@@ -34,6 +36,9 @@ const Reftable = ({references}) => {
                     <th key={ref[r]}> {ref[r]} </th> )} 
                     <th> 
                         <Delbutton/> 
+                    </th>
+                    <th> 
+                        <Badge bg="secondary" className="p-2"> {ref.citekey}</Badge>
                     </th>
               </tr>)}
             </tbody>

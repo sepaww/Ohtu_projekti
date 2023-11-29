@@ -50,6 +50,13 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+log.htmö
+*output.xml
+selenium*.png
+report.xml
+report.html
+log.html
+
 
 # Translations
 *.mo

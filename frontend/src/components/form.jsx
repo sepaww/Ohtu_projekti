@@ -20,16 +20,8 @@ const Inputfield = ({ input }) => {
   )
 }
 const Typeselect = ({setRefType, entryTypes}) => {
-  const types = ["Book", "Article", "Booklet", "MasterThesis"]
   // this prevents a bug if you choose select type to start again 
-  const setTypeCorrect = (target) => {
-    if (target === "reset") {
-      setRefType(null)
-    }
-    else {
-      setRefType(target)
-    }
-  }
+  const setTypeCorrect = (target) => target === "reset" ? setRefType(null) : setRefType(target)
   return(
   <div> 
     <Form.Select aria-label="Ref type select" name="type" size="lg" className="m-2" onChange={(e) => setTypeCorrect(e.target.value)}>
