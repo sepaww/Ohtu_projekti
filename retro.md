@@ -1,4 +1,4 @@
-Retrospektiivi 29.11.
+Retrospektiivi 30.11.
 
 Retrospektiivi toteutettiin Start, Stop, Continue, More of, Less of Wheel-tekniikalla.
 Keskustelussa nousi esille useita positiivisia seikkoja tiimin työskentelyssä, sekä joitakin
