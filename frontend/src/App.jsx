@@ -18,7 +18,7 @@ function App () {
     <Container className='lg px-2'> 
       <Mainbar/>
       <RefForm setRefs={setRefs} refs={refs} entryTypes={entryTypes}/>
-      <Reftable references={refs}/>
+      <Reftable refs={refs} setRefs={setRefs}/>
     </Container>
   )
 }

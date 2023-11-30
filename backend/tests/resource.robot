@@ -123,7 +123,7 @@ Empty The table
     Wait Until Element Is Visible    id:entrylist
     ${rows}=    Get Element Count    //table[@id="entrylist"]/tbody/tr
     FOR    ${row_num}    IN RANGE    1    ${rows+1}
-        ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[${row_num}]/th[5]/button  
+        ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/th[5]/button  
         Click Element  ${button}
     END
     Sleep  1

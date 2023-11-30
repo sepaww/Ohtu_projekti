@@ -1,20 +1,25 @@
 /* eslint-disable react/prop-types */
 import { Table, Button, Badge} from "react-bootstrap"
 import refservice from "../Services/Refservice"
-const Delbutton = (citekey) => {
-    const handledelete = async () => {
-        await refservice.deleteRef(citekey.reference)
-        console.log("Deleted")
-    }
-    return (
-        <Button variant="danger" size="sm" onClick={handledelete}> Delete </Button>
-    )
-} 
 
-const Reftable = ({references}) => {
+
+const Reftable = ({refs, setRefs}) => {
+    const handledelete = async (citekey) => {
+        console.log(citekey)
+        const response = await refservice.deleteRef(citekey.reference)
+        const newRefs = refs.filter((r) => r.citekey !== citekey.reference)
+        console.log(newRefs)
+        response.status === 204 ? setRefs(newRefs) : console.log('error')}
+
+    const Delbutton = (citekey) => {
+        return (
+            <Button variant="danger" size="sm" onClick={() => handledelete(citekey)}> Delete </Button>
+        )
+    } 
     const rows2 = ["author", "journal", "title", "year",]
-    if (!references)
+    if (!refs)
         return <div> loadinng... </div>
+
     return (
         <Table striped id="entrylist"> 
             <thead> 
@@ -25,7 +30,7 @@ const Reftable = ({references}) => {
                 </tr>
             </thead>
             <tbody> 
-                {references.map((ref) => 
+                {refs.map((ref) => 
                     <tr key={ref.citekey}> 
                 {       rows2.map((r)=> 
                     <th key={ref[r]}> {ref[r]} </th> )} 
