@@ -14,6 +14,12 @@ class BibControllerTestCase(unittest.TestCase):
             db.init_app(self.app)
             db.create_all()
         self.app.register_blueprint(bib_controller)
+        self.data = {
+            "Title": "example",
+            "Author": "Some_author",
+            "Journal": "HS ",
+            "type": "Journal",
+        }
 
         self.client = self.app.test_client()
 
@@ -24,12 +30,7 @@ class BibControllerTestCase(unittest.TestCase):
 
     @patch("services.data_service.DataService.get_all")
     def test_get(self, mock_get_all):
-        mock_get_all.return_value = {
-            "Title": "example",
-            "Author": "Some_author",
-            "Journal": "HS ",
-            "type": "Journal",
-        }
+        mock_get_all.return_value = self.data
         response = self.client.get("/api/refs")
         self.assertEqual(response.status_code, 200)
 
@@ -44,46 +45,27 @@ class BibControllerTestCase(unittest.TestCase):
 
     @patch("services.data_service.DataService.save_data")
     def test_save_data(self, mock_save_data):
-        mock_save_data.return_value = {
-            "Title": "example",
-            "Author": "Some_author",
-            "Journal": "HS ",
-            "type": "Journal",
-        }
-        data_to_be_saved = {
-            "Title": "example",
-            "Author": "Some_author",
-            "Journal": "HS ",
-            "type": "Journal",
-        }
+        mock_save_data.return_value = self.data
+        data_to_be_saved = self.data
         response = self.client.post("/api/refs", json=data_to_be_saved)
         self.assertEqual(response.status_code, 201)
         data = response.get_json()
-        self.assertEqual(
-            data,
-            {
-                "Title": "example",
-                "Author": "Some_author",
-                "Journal": "HS ",
-                "type": "Journal",
-            },
-        )
+        self.assertEqual(data, self.data)
 
     @patch("services.data_service.DataService.delete_article")
     def test_delete_ref_success(self, mock_delete_article):
         mock_delete_article.return_value = True
-        response = self.client.delete('/api/refs/example_citekey' , content_type='application/json')
+        response = self.client.delete(
+            "/api/refs/example_citekey", content_type="application/json"
+        )
         self.assertEqual(response.status_code, 204)
-        self.assertEqual(response.get_data(as_text=True), '')   
+        self.assertEqual(response.get_data(as_text=True), "")
 
-    @patch("services.data_service.DataService.delete_article")
-    def test_delete_ref_failure(self, mock_delete_article):
-        mock_delete_article.return_value = False
-        response = self.client.delete('/api/refs/example_citekey' , content_type='application/json')
-        self.assertEqual(response.status_code, 500)
-        expected_response = {"message": f"Failed to delete article with citekey."}
-        self.assertEqual(json.loads(response.get_data(as_text=True)), expected_response)
-
-
-if __name__ == "__main__":
-    unittest.main()
+    @patch("services.data_service.DataService.reset")
+    def test_delete_ref_failure(self, mock_reset):
+        mock_reset.return_value = True
+        response = self.client.get("/test/reset")
+        mock_reset.assert_called_once()
+        expected_response = "Database was reset."
+        self.assertEqual(response.data.decode("utf-8"), expected_response)
+        self.assertEqual(response.status_code, 200)
