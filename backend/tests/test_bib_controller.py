@@ -1,7 +1,7 @@
 import unittest
 from flask import Flask, json
 from app import bib_controller, db
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 
 class BibControllerTestCase(unittest.TestCase):
@@ -52,14 +52,28 @@ class BibControllerTestCase(unittest.TestCase):
         data = response.get_json()
         self.assertEqual(data, self.data)
 
-    @patch("services.data_service.DataService.delete_article")
-    def test_delete_ref_success(self, mock_delete_article):
+    def test_delete_ref_success(self):
+        mock_delete_article = Mock()
         mock_delete_article.return_value = True
         response = self.client.delete(
             "/api/refs/example_citekey", content_type="application/json"
         )
         self.assertEqual(response.status_code, 204)
         self.assertEqual(response.get_data(as_text=True), "")
+
+    def test_delete_ref_fail(self):
+        with patch(
+            "services.data_service.DataService.delete_article"
+        ) as mock_delete_article:
+            mock_delete_article.return_value = False
+
+            response = self.client.delete(
+                "/api/refs/example_citekey", content_type="application/json"
+            )
+            self.assertEqual(response.status_code, 500)
+            expected_message = "Failed to delete article with citekey."
+            result = response.get_json()
+            self.assertEqual(result["message"], expected_message)
 
     @patch("services.data_service.DataService.reset")
     def test_delete_ref_failure(self, mock_reset):

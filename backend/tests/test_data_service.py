@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, Mock
-from services.data_service import DataService, Article, db
+from services.data_service import DataService, Article
 
 
 class TestDataService(unittest.TestCase):
@@ -14,6 +14,7 @@ class TestDataService(unittest.TestCase):
             "author": "Some author",
             "journal": "HS",
         }
+        article_mock = Mock(spec=Article)
 
     def test_data_service_integration(self):
         with patch("services.data_service.db.session.add") as mock_add, patch(
@@ -27,8 +28,7 @@ class TestDataService(unittest.TestCase):
     def test_get_all(self, mock_article):
         mock_article.all.return_value = self.payload
 
-        data_service = DataService()
-        result = data_service.get_all()
+        result = self.data_service.get_all()
 
         self.assertEqual(result, self.payload)
         mock_article.all.assert_called_once()
@@ -42,7 +42,7 @@ class TestDataService(unittest.TestCase):
         self.assertEqual(result.author, "Some author")
         self.assertEqual(result.title, "example")
 
-    def test_data_service_delete(self):
+    def test_data_service_delete_success(self):
         with patch("services.data_service.db.session.query") as mock_query:
             mock_article = (
                 mock_query.return_value.filter_by.return_value.first.return_value
@@ -56,6 +56,7 @@ class TestDataService(unittest.TestCase):
             mock_query.return_value.filter_by.assert_called_once_with(citekey="123")
             mock_query.return_value.filter_by.return_value.first.assert_called_once()
             if mock_article:
+                
                 self.assertTrue(result)
 
     def test_data_service_delete_fail(self):
