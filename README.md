@@ -3,6 +3,8 @@
 ![GHA_workflow_badge](https://github.com/sepaww/Ohtu_projekti/workflows/CI/badge.svg) 
 [![codecov](https://codecov.io/gh/sepaww/Ohtu_projekti/graph/badge.svg?token=DKGEKUINOQ)](https://codecov.io/gh/sepaww/Ohtu_projekti)
 
+## Testikattavuus Graafi
+https://codecov.io/gh/sepaww/Ohtu_projekti/graphs/sunburst.svg?token=DKGEKUINOQ
 
 [Product Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/simonena_ad_helsinki_fi/Ed88uF9sw4xFoWAGecS_zvIBGAcMHuNmpuXQZrrZfnn-5g)
 
