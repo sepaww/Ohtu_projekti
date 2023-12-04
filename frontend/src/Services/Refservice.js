@@ -4,7 +4,6 @@ const baseUrl = '/api/refs'
 const getAll = async () => {
   const request = axios.get(baseUrl)
   const response = await request
-  console.log(response.data)
   return response.data
 }
 
@@ -24,7 +23,6 @@ const postNew = async (object) => {
 
 const deleteRef = async (citekey) => {
   const response = await axios.delete(`${baseUrl}/${citekey}`)
-  console.log(response)
   return response
 }
 

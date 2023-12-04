@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Form, InputGroup, Stack, Button} from "react-bootstrap";
+import { Form, InputGroup, Stack, Button, Container} from "react-bootstrap";
 import refservice from "../Services/Refservice";
 import { useState } from "react";
 
@@ -22,14 +22,15 @@ const Inputfield = ({ input }) => {
 const Typeselect = ({setRefType, entryTypes}) => {
   // this prevents a bug if you choose select type to start again 
   const setTypeCorrect = (target) => target === "reset" ? setRefType(null) : setRefType(target)
-  return(
-  <div> 
-    <Form.Select aria-label="Ref type select" name="type" size="lg" className="m-2" onChange={(e) => setTypeCorrect(e.target.value)}>
-      <option value={"reset"}> Select Type to start</option>
-      {entryTypes.map((t) => <option value={t} key={t}>{t}</option>)}
-    </Form.Select>
-  </div>)
-}
+    return(
+        <div> 
+          <Form.Select aria-label="Ref type select" name="type" size="lg" className="m-2" onChange={(e) => setTypeCorrect(e.target.value)}>
+            <option value={"reset"}> Select Type to start</option>
+            {entryTypes.map((t) => <option value={t} key={t}>{t}</option>)}
+          </Form.Select>
+        </div>
+    )
+  }
 
 const RefForm = ({setRefs, refs, entryTypes}) => {
     const [reftype, setRefType] = useState(false)
@@ -60,10 +61,10 @@ const RefForm = ({setRefs, refs, entryTypes}) => {
     ]
 
     return (
-      
+      <Container className="px-2"> 
         <Form method="post" onSubmit={handleSubmit}> 
         <Typeselect setRefType={setRefType} entryTypes={Object.keys(entryTypes)}/>
-            <Stack className="col-md-6" gap="3">
+            <Stack gap="2">
               {
               reftype ? 
               entryTypes[reftype].map((input) => <Inputfield key={input} input={fields.find(o => o.name === input)}> </Inputfield>) : 
@@ -77,6 +78,7 @@ const RefForm = ({setRefs, refs, entryTypes}) => {
             }
 
         </Form>
+      </Container>
     )
 }
 

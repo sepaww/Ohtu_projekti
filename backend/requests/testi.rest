@@ -7,6 +7,36 @@ POST http://localhost:5000/api/refs
 Content-Type: application/json
 
 {
-    "author" :"moi",
-    "title": "moi2"
+    "author" :"Testi Testinen",
+    "title": "Testataan filtteröintiä",
+    "citekey" :"666-999",
+    "year": 2000,
+    "journal": "HS-Visio",
+    "type": "article"
+}
+
+####
+POST http://localhost:5000/api/refs
+Content-Type: application/json
+
+{
+    "author" :"Maija Meikäläinen",
+    "title": "Testataan Poistamista ",
+    "citekey" :"LOL-1234",
+    "year": 1980,
+    "journal": "Julkaisu 1",
+    "type": "article"
+}
+
+### 
+POST http://localhost:5000/api/refs
+Content-Type: application/json
+
+{
+    "author" :"Maija Meikäläinen",
+    "title": "Testataan Poistamista ",
+    "citekey" :"LOL-123",
+    "year": 2023,
+    "journal": "Julkaisu 1",
+    "type": "article"
 }
