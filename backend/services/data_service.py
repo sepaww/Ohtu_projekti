@@ -1,5 +1,7 @@
-from models.article import Article
-from database import db
+from models.article import Article, db
+import bibtexparser
+from bibtexparser.bwriter import BibTexWriter
+from bibtexparser.bibdatabase import BibDatabase
 
 
 class DataService:
@@ -27,3 +29,23 @@ class DataService:
         for row in allrows:
             db.session.delete(row)
         db.session.commit()
+
+    def save_as_bib(self):
+        refs = self.get_all()
+        bib_database = BibDatabase()
+        for article in refs:
+            entry = {
+                'type': 'article',
+                'citekey': article.citekey,
+                'author': article.author,
+                'title': article.title,
+                'year': article.year,
+                'journal': article.journal,
+            }
+            bib_database.entries.append(entry)
+        file_path = "/backend/bibtex/output.bib"
+        with open(file_path, 'w') as bibfile:
+            writer = BibTexWriter()
+            bibfile.write(writer.write(bib_database))
+
+        return file_path

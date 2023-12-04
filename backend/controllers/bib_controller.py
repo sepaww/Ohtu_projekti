@@ -1,4 +1,4 @@
-from flask import jsonify, request, Blueprint
+from flask import jsonify, request, Blueprint, send_file
 from services.data_service import DataService
 from models.article import get_schema
 
@@ -17,7 +17,6 @@ def get_refs():
 def add_refs():
     payload = request.get_json()
     new = data_service.save_data(payload)
-
     return jsonify(new), 201
 
 
@@ -38,3 +37,8 @@ def delete_ref(citekey):
 def test_reset():
     data_service.reset()
     return "Database was reset."
+
+@bib_controller.route("/api/refs/export", methods=["GET"])
+def download_bib():
+    file_path = data_service.save_as_bib()
+    return send_file(file_path, as_attachment=True)

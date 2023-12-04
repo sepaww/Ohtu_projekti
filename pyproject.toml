@@ -15,6 +15,7 @@ flask-migrate = "^4.0.5"
 alembic = "^1.12.1"
 gunicorn = "^21.2.0"
 python-dotenv = "^1.0.0"
+bibtexparser = "^1.4.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
