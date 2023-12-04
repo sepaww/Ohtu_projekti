@@ -11,7 +11,7 @@ ${HOME_URL}  http://${SERVER}/index.html
 *** Keywords ***
 Open And Configure Browser
     ${options}  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys
-    #Call Method  ${options}  add_argument  --headless
+    Call Method  ${options}  add_argument  --headless
     Open Browser  browser=firefox  options=${options}
     Set Selenium Speed  ${DELAY}
 
