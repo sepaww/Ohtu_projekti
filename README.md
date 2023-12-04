@@ -4,8 +4,9 @@
 [![codecov](https://codecov.io/gh/sepaww/Ohtu_projekti/graph/badge.svg?token=DKGEKUINOQ)](https://codecov.io/gh/sepaww/Ohtu_projekti)
 
 ## Testikattavuus Graafi
-https://codecov.io/gh/sepaww/Ohtu_projekti/graphs/sunburst.svg?token=DKGEKUINOQ
+![coverage graph](https://codecov.io/gh/sepaww/Ohtu_projekti/graphs/sunburst.svg?token=DKGEKUINOQ)
 
+## Linkit
 [Product Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/simonena_ad_helsinki_fi/Ed88uF9sw4xFoWAGecS_zvIBGAcMHuNmpuXQZrrZfnn-5g)
 
 ## [Linkki sovellukseen](https://bibmanager.onrender.com/index.html)
