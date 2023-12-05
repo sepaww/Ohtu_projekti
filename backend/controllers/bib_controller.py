@@ -16,8 +16,12 @@ def get_refs():
 @bib_controller.route("/api/refs", methods=["POST"])
 def add_refs():
     payload = request.get_json()
-    new = data_service.save_data(payload)
-    return jsonify(new), 201
+
+    try:
+        new = data_service.save_data(payload)
+        return jsonify(new), 201
+    except ValueError as e:
+        return {"message": str(e)}, 400
 
 
 @bib_controller.route("/api/refs/<citekey>", methods=["DELETE"])
@@ -25,18 +29,17 @@ def delete_ref(citekey):
     ref_to_be_deleted = data_service.delete_article(citekey)
     if ref_to_be_deleted:
         return (
-            jsonify(
-                {"message": f"Article with citekey {citekey} deleted successfully"}
-            ),
+            {"message": f"Article with citekey {citekey} deleted successfully"},
             204,
         )
-    return jsonify({"message": f"Failed to delete article with citekey."}), 500
+    return {"message": f"Failed to delete article with citekey."}, 500
 
 
 @bib_controller.route("/test/reset", methods=["GET"])
 def test_reset():
     data_service.reset()
     return "Database was reset."
+
 
 @bib_controller.route("/api/refs/export", methods=["GET"])
 def download_bib():

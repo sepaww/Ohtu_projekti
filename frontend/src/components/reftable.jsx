@@ -1,103 +1,86 @@
 /* eslint-disable react/prop-types */
 import { Table, Button, Badge, Container} from "react-bootstrap"
-import refservice from "../Services/Refservice"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Toolbar from "./toolbar"
+import DeleteModal from "./delete"
 
-const refFilter = (refs, filter) => {
-    const copyrefs = [...refs]
-    var newrefs = copyrefs.filter((r) => r.year >= filter.year.min && r.year <= filter.year.max)
-    if (Object.entries(filter.criterias).length > 0) {
-        const field = Object.entries(filter.criterias)[0][0]
-        const string = Object.entries(filter.criterias)[0][1]
-        const regex = new RegExp(string, 'i')
-        switch(field) {
-            case 'All'  : 
-                newrefs = newrefs.filter(r => {
-                    const valuesastring = Object.values(r).toString()
-                    console.log(valuesastring)
-                    return regex.test(valuesastring)
-                })
-                break
-            case 'Author'  : 
-                newrefs = newrefs.filter(r => regex.test(r.author))
-                break
-            case 'Title' :
-                newrefs = newrefs.filter(r => regex.test(r.title))
-                break
-        }   
-    }
-    return newrefs
+function yearLimits (references)  {
+    const values = references.flatMap((o) => o.year.match(/\d+/g)).filter(v => v)
+    return {min: Math.min(...values), max: Math.max(...values)}
 }
-const Reftable = ({refs, setRefs}) => {
-    const [yearRange, setYearRange] = useState(countLimits(refs)) 
-    const [filter, setFilters] = useState({criterias: {}, year: yearRange})
-    const [refsToDisplay, setRefsToDisplay] = useState(null)
-    const [limits, setLimits ] = useState(yearRange)
-    
-    const handledelete = deletefunc(refs, setRefs, setYearRange)
-    
-    useEffect(()=> {
-        const newrefs = refFilter(refs, filter)
-        setRefsToDisplay(newrefs)
-    }, [filter, refs])
 
-    useEffect(() => {
-        const newyears = countLimits(refs)
-        setYearRange(newyears)
-        setLimits(newyears)
-        
-    }, [refs])
+function filterCriterion(filters, ref) {
+    const years = ref.year.match(/\d+/g)
+    // at least one of the end points in year must fall within filter range
+    if (years && !years.some(y => y >= filters.year.min && y <= filters.year.max )) {
+        return false
+    }
 
-    if (!refsToDisplay) return( <h3> waiting</h3>)
-    const Delbutton = (citekey) => {
-        return (
-            <Button variant="danger" size="sm" onClick={() => handledelete(citekey)}> Delete </Button>
-        )
-    } 
-    const rows2 = ["author", "journal", "title", "year",]
+    const refWAll = {...ref, all: Object.values(ref).toString()}
 
+    return Object.keys(refWAll).every(key => {
+        if (filters.text[key]) {
+            const regex = new RegExp(filters.text[key], 'i')
+            return regex.test(refWAll[key])
+        }
+        return true
+    })
+}
+
+function RefRow({ reference, headers, setToBeDeleted }) {
     return (
-        <Container> 
-            <Toolbar filter={filter} setFilters={setFilters} yearRange={yearRange} setLimits={setLimits} limits={limits}>  </Toolbar>
-            <Table striped id="entrylist"> 
-                <thead> 
-                    <tr>
-                        {rows2.map((r) => <th key={r}>{r}</th>)}
-                        <th> Delete</th>
-                        <th> Citekey</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    {refsToDisplay.map((ref) => 
-                        <tr key={ref.citekey}> 
-                    {       rows2.map((r)=> 
-                        <th key={ref[r]}> {ref[r]} </th> )} 
-                        <th> 
-                            <Delbutton reference={ref.citekey}/> 
-                        </th>
-                        <th> 
-                            <Badge bg="secondary" className="p-2"> {ref.citekey}</Badge>
-                        </th>
-                  </tr>)}
-                </tbody>
-            </Table>
-        </Container>
+        <tr key={reference.citekey}>
+            {headers.map(k => k === "citekey" ? 
+                <td key={k}><Badge bg="secondary" className="p-2">{reference[k]}</Badge></td> :
+                <td key={k}>{reference[k]}</td>)}
+            <td> 
+                <Button variant="danger" size="sm" onClick={() => setToBeDeleted(reference.citekey)}>
+                    Delete
+                </Button>
+            </td>
+        </tr>
     )
 }
 
-export default Reftable
+export default function Reftable ({refs, setRefs, setAlert}) {
+    const [prevLimits, setPrevLimits] = useState({min: -Infinity, max: Infinity})
+    const [filters, setFilters] = useState({
+        year: yearLimits(refs),
+        text: {
+            all: "",
+            author: "",
+            title: ""
+        }
+    })
+    const [toBeDeleted, setToBeDeleted] = useState("")
 
-function deletefunc(refs, setRefs, setYearRange) {
-    return async (citekey) => {
-        const response = await refservice.deleteRef(citekey.reference)
-        const newRefs = refs.filter((r) => r.citekey !== citekey.reference)
-        response.status === 204 ? setRefs(newRefs) : console.log('error')
-        setYearRange(countLimits(refs))
+    const limits = yearLimits(refs)
+    if (JSON.stringify(limits) !== JSON.stringify(prevLimits)) {
+        console.log(limits)
+        console.log(prevLimits)
+        setFilters({...filters, year: limits})
+        setPrevLimits(limits)
     }
-}
 
-function countLimits (object)  {
-    const values = object.map((o) => o.year)
-    return {min: Math.min(...values), max: Math.max(...values)}
+    const headers = ["author", "journal", "title", "year", "citekey"] // ordering is fixed here
+
+    return (
+        <Container> 
+            <Toolbar filters={filters} setFilters={setFilters} limits={limits}>  </Toolbar>
+            <Table striped id="entrylist"> 
+                <thead> 
+                    <tr>
+                        {headers.map((r) => <th key={r}>{r}</th>)}
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {refs.filter(r => filterCriterion(filters, r)).map((reference) => 
+                    <RefRow key={reference.citekey} reference={reference} setToBeDeleted={setToBeDeleted} headers={headers}/>
+                    )}                    
+                </tbody>
+            </Table>
+            <DeleteModal toBeDeleted={toBeDeleted} setToBeDeleted={setToBeDeleted} refs={refs} setRefs={setRefs} setAlert={setAlert}/>
+        </Container>
+    )
 }
