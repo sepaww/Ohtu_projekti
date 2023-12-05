@@ -1,12 +1,18 @@
 from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.exc import IntegrityError
 from database import db
 
 
 class Entry(MappedAsDataclass, DeclarativeBase):
+    citekey: Mapped[str] = mapped_column(db.String, primary_key=True)
+
     def save(self):
-        db.session.add(self)
-        db.session.commit()
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except IntegrityError:
+            raise ValueError(f"Citekey {self.citekey} already exists.")
 
     def delete(self):
         db.session.delete(self)
@@ -19,7 +25,6 @@ class Entry(MappedAsDataclass, DeclarativeBase):
 
 class Article(Entry):
     __tablename__ = "article"
-    citekey: Mapped[str] = mapped_column(db.String, primary_key=True)
     author: Mapped[str] = mapped_column(db.String, nullable=False)
     title: Mapped[str] = mapped_column(db.String, nullable=False)
     year: Mapped[str] = mapped_column(db.String, nullable=False)

@@ -156,16 +156,18 @@ Empty The table
     Wait Until Element Is Visible    id:entrylist
     ${rows}=    Get Element Count    //table[@id="entrylist"]/tbody/tr
     FOR    ${row_num}    IN RANGE    1    ${rows+1}
-        ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/th[5]/button  
+        ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/td[6]/button  
         Click Element  ${button}
+        Click Button    dialog-delete
     END
     Sleep  1
     Go To Main Page
 
 Delete One Row
     Wait Until Element Is Visible    id:entrylist
-    ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/th[5]/button  
+    ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/td[6]/button  
     Click Element  ${button}
+    Click Button    dialog-delete
 
     
 Check Table Row

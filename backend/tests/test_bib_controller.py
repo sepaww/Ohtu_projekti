@@ -38,7 +38,7 @@ class BibControllerTestCase(unittest.TestCase):
         self.assertIn("form", data)
         form_data = data["form"]
         expected_form_data = {
-            "article": ["citekey", "author", "title", "year", "journal"]
+            "article": ["author", "title", "year", "journal", "citekey"]
         }
 
         self.assertEqual(form_data, expected_form_data)

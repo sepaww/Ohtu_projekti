@@ -4,76 +4,73 @@ import 'react-range-slider-input/dist/style.css'
 import { Stack, Form, Dropdown, DropdownButton, InputGroup, Button, ListGroup, Container} from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 
+export default function Toolbar({ filters, setFilters, limits }) {
+    const [activeFilter, setActiveFilter] = useState("All")
+    const [filterField, setFilterField] = useState("")
 
-    
-const Toolbar = ({filter, setFilters, yearRange, setLimits, limits}) => {
-    
-    const [Activefilter, setActiveFilter] = useState("All")
-    const [filterField, setFilter] = useState("")
-
-    const updateFilter = () => {
-        setFilters({...filter, criterias: {[Activefilter]: filterField}})
+    const updateFilterText = () => {
+        setFilters({...filters, text: {...filters.text, [activeFilter.toLowerCase()]: filterField}})
     }
+
+    const updateFilterYear = (low, up) => {
+        setFilters({...filters, year: {min: low, max: up}})
+    }
+
     const clearFilter = () => {
-        setFilters({...filter, ...{criterias: {}}})
+        setFilters({...filters, text: Object.keys(filters.text).reduce((acc, cur) => ({...acc, [cur]: ""}), {})})
     }
 
     const FilterGroup = () => {
-        const isFilters = JSON.stringify(filter.criterias) !== '{}'
-        return (
+        const isClear = Object.values(filters.text).every(v => v === "")
+
+        return isClear ? null : (
             <div size="sm"> 
-                {isFilters && "Active filter"}
-                    <ListGroup horizontal="sm" >
-                        {Object.keys(filter.criterias).map((key) => <ListGroup.Item key={key}> {`${key}: ${filter.criterias[key]}`}</ListGroup.Item>)}
-                    {isFilters && <Button variant="outline-primary" onClick={clearFilter} className='mx-2' id='reset_button'> Reset</Button>}
+                Active filter
+                <ListGroup horizontal="sm" style={{ textTransform: 'capitalize' }}>
+                    {Object.keys(filters.text).map((key) => 
+                    <ListGroup.Item key={key}>{`${key}: ${filters.text[key]}`}</ListGroup.Item>
+                    )}
+                    <Button variant="outline-primary" onClick={clearFilter} className='mx-2' id='reset_button'>Reset</Button>
                 </ListGroup>
             </div>
         )
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { setFilters({...filter, ...{year: limits}})}, [limits])
-
     return(
         <Container className='my-2'> 
-        <Form >       
+        <Form>       
             <Stack direction='horizontal' gap={2}> 
             <div className='col-2'> 
-                <Form.Control type="min" size='sm'  id='small_year' value={limits.min} onChange={(e) => setLimits({min: e.target.value, max: limits.max})}/>
+                <Form.Control type="min" size='sm' id='small_year' value={filters.year.min} onChange={e => updateFilterYear(e.target.value, filters.year.max)}/>
             </div>
             <div className='col-4'> 
-                <RangeSlider className='formControlRange'  value={[limits.min,limits.max]} defaultValue={[limits.min, limits.max]} min={yearRange.min} max={yearRange.max} step={1} onInput={(e) => setLimits({min: e[0], max: e[1]})}/>
+                <RangeSlider className='formControlRange' value={[filters.year.min, filters.year.max]} defaultValue={[limits.min, limits.max]} min={limits.min} max={limits.max} step={1} onInput={e => updateFilterYear(e[0], e[1])}/>
             </div>
             <div className="col-2" id='2-max'> 
-                <Form.Control type="max" size='sm' id='large_year' value={limits.max} onChange={(e) => {
-                    setLimits({min: limits.min, max: e.target.value})}}
-                    />
+                <Form.Control type="max" size='sm' id='large_year' value={filters.year.max} onChange={e => updateFilterYear(filters.year.min, e.target.value)}/>
             </div>        
             <div className='ms-auto'> 
-                <InputGroup size='sm' > 
+                <InputGroup size='sm'> 
                     <DropdownButton 
                         variant='outline-secondary'
-                        title={Activefilter}
+                        title={activeFilter}
                         id='filter-select-button-1'
                         onSelect = {(e) => setActiveFilter(e)}
-                        >
-                        <Dropdown.Item eventKey="All" id='all-filter'> All</Dropdown.Item>
-                        <Dropdown.Item eventKey="Author" id="auth-filter"> Author</Dropdown.Item>
-                        <Dropdown.Item eventKey= "Title"id='title-filter'> Title</Dropdown.Item>
+                    >
+                        <Dropdown.Item eventKey="All" id='all-filter'>All</Dropdown.Item>
+                        <Dropdown.Item eventKey="Author" id="auth-filter">Author</Dropdown.Item>
+                        <Dropdown.Item eventKey="Title" id='title-filter'>Title</Dropdown.Item>
                     </DropdownButton>
                     <Form.Control 
                         id='filter_word'
                         placeholder='add a filter'
                         aria-label='Set Filter'
                         value={filterField}
-                        onChange={(e) => setFilter(e.target.value)}
-                    ></Form.Control>
-                        <Button 
-                        id='add_filter'
-                        variant='outline-success'
-                        onClick={updateFilter}
-                        > 
-                        Add </Button>
+                        onChange={(e) => setFilterField(e.target.value)}
+                    />
+                    <Button id='add_filter' variant='outline-success' onClick={updateFilterText}> 
+                        Add
+                    </Button>
                 </InputGroup>
             </div>
             </Stack>
@@ -82,6 +79,3 @@ const Toolbar = ({filter, setFilters, yearRange, setLimits, limits}) => {
     </Container>
     )
 }
-
-
-export default Toolbar

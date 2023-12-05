@@ -32,8 +32,9 @@ const Typeselect = ({setRefType, entryTypes}) => {
     )
   }
 
-const RefForm = ({setRefs, refs, entryTypes}) => {
+const RefForm = ({setRefs, refs, entryTypes, setAlert}) => {
     const [reftype, setRefType] = useState(false)
+
     const handleSubmit =  async(event)   => {
       event.preventDefault()
       const form = event.target
@@ -42,6 +43,7 @@ const RefForm = ({setRefs, refs, entryTypes}) => {
       const response = await refservice.postNew(formJson)
       if (response.status === 201) {
         setRefs(refs.concat(formJson))
+        setAlert({text: "New citation has been added.", variant: "success"})
       }
     }
     const fields = [
