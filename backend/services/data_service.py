@@ -16,7 +16,6 @@ class DataService:
             return new
 
     def delete_article(self, citekey):
-        self.save_as_bib()
         try:
             article = db.session.query(Article).filter_by(citekey=citekey).first()
             if article:
@@ -33,7 +32,6 @@ class DataService:
         db.session.commit()
 
     def save_as_bib(self):
-        refs = self.get_all()
         bib_database = BibDatabase()
         for article in refs:
             entry = {
