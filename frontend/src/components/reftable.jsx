@@ -56,8 +56,6 @@ export default function Reftable ({refs, setRefs, setAlert}) {
 
     const limits = yearLimits(refs)
     if (JSON.stringify(limits) !== JSON.stringify(prevLimits)) {
-        console.log(limits)
-        console.log(prevLimits)
         setFilters({...filters, year: limits})
         setPrevLimits(limits)
     }
