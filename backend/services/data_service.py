@@ -32,6 +32,7 @@ class DataService:
         db.session.commit()
 
     def save_as_bib(self):
+        refs = self.get_all()
         bib_database = BibDatabase()
         for article in refs:
             entry = {
