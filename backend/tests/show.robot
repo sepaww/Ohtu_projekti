@@ -13,7 +13,7 @@ User can select article type
     Select Article
     #Select Book
     #Select Booklet
-    #elect MasterThesis
+    #Select MasterThesis
 
 User can see added entries
     Add Premade Article

@@ -25,7 +25,7 @@ const Toolbar = ({filter, setFilters, yearRange, setLimits, limits}) => {
                 {isFilters && "Active filter"}
                     <ListGroup horizontal="sm" >
                         {Object.keys(filter.criterias).map((key) => <ListGroup.Item key={key}> {`${key}: ${filter.criterias[key]}`}</ListGroup.Item>)}
-                    {isFilters && <Button variant="outline-primary" onClick={clearFilter} className='mx-2'> Reset</Button>}
+                    {isFilters && <Button variant="outline-primary" onClick={clearFilter} className='mx-2' id='reset_button'> Reset</Button>}
                 </ListGroup>
             </div>
         )
@@ -39,13 +39,13 @@ const Toolbar = ({filter, setFilters, yearRange, setLimits, limits}) => {
         <Form >       
             <Stack direction='horizontal' gap={2}> 
             <div className='col-2'> 
-                <Form.Control type="min" size='sm' value={limits.min} onChange={(e) => setLimits({min: e.target.value, max: limits.max})}/>
+                <Form.Control type="min" size='sm'  id='small_year' value={limits.min} onChange={(e) => setLimits({min: e.target.value, max: limits.max})}/>
             </div>
             <div className='col-4'> 
                 <RangeSlider className='formControlRange'  value={[limits.min,limits.max]} defaultValue={[limits.min, limits.max]} min={yearRange.min} max={yearRange.max} step={1} onInput={(e) => setLimits({min: e[0], max: e[1]})}/>
             </div>
             <div className="col-2" id='2-max'> 
-                <Form.Control type="max" size='sm' value={limits.max} onChange={(e) => {
+                <Form.Control type="max" size='sm' id='large_year' value={limits.max} onChange={(e) => {
                     setLimits({min: limits.min, max: e.target.value})}}
                     />
             </div>        
@@ -57,17 +57,19 @@ const Toolbar = ({filter, setFilters, yearRange, setLimits, limits}) => {
                         id='filter-select-button-1'
                         onSelect = {(e) => setActiveFilter(e)}
                         >
-                        <Dropdown.Item eventKey="All" id='all-filterll'> All</Dropdown.Item>
+                        <Dropdown.Item eventKey="All" id='all-filter'> All</Dropdown.Item>
                         <Dropdown.Item eventKey="Author" id="auth-filter"> Author</Dropdown.Item>
                         <Dropdown.Item eventKey= "Title"id='title-filter'> Title</Dropdown.Item>
                     </DropdownButton>
                     <Form.Control 
+                        id='filter_word'
                         placeholder='add a filter'
                         aria-label='Set Filter'
                         value={filterField}
                         onChange={(e) => setFilter(e.target.value)}
                     ></Form.Control>
                         <Button 
+                        id='add_filter'
                         variant='outline-success'
                         onClick={updateFilter}
                         > 
