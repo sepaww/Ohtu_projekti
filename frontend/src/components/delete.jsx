@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Button, Modal } from 'react-bootstrap';
 import refservice from '../Services/Refservice';
 

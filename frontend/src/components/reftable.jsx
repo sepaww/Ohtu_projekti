@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Table, Button, Badge, Container} from "react-bootstrap"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Toolbar from "./toolbar"
 import DeleteModal from "./delete"
 
@@ -19,7 +19,7 @@ function filterCriterion(filters, ref) {
     const refWAll = {...ref, all: Object.values(ref).toString()}
 
     return Object.keys(refWAll).every(key => {
-        if (!!filters.text[key]) {
+        if (filters.text[key]) {
             const regex = new RegExp(filters.text[key], 'i')
             return regex.test(refWAll[key])
         }
@@ -31,8 +31,8 @@ function RefRow({ reference, headers, setToBeDeleted }) {
     return (
         <tr key={reference.citekey}>
             {headers.map(k => k === "citekey" ? 
-                <td><Badge bg="secondary" className="p-2">{reference[k]}</Badge></td> :
-                <td>{reference[k]}</td>)}
+                <td key={k}><Badge bg="secondary" className="p-2">{reference[k]}</Badge></td> :
+                <td key={k}>{reference[k]}</td>)}
             <td> 
                 <Button variant="danger" size="sm" onClick={() => setToBeDeleted(reference.citekey)}>
                     Delete
@@ -76,7 +76,7 @@ export default function Reftable ({refs, setRefs, setAlert}) {
                 </thead>
                 <tbody>
                     {refs.filter(r => filterCriterion(filters, r)).map((reference) => 
-                    <RefRow reference={reference} setToBeDeleted={setToBeDeleted} headers={headers}/>
+                    <RefRow key={reference.citekey} reference={reference} setToBeDeleted={setToBeDeleted} headers={headers}/>
                     )}                    
                 </tbody>
             </Table>

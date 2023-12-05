@@ -2,12 +2,12 @@
 import RangeSlider from 'react-range-slider-input'
 import 'react-range-slider-input/dist/style.css'
 import { Stack, Form, Dropdown, DropdownButton, InputGroup, Button, ListGroup, Container} from 'react-bootstrap'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function Toolbar({ filters, setFilters, limits }) {
     const [activeFilter, setActiveFilter] = useState("All")
     const [filterField, setFilterField] = useState("")
-
+    
     const updateFilterText = () => {
         setFilters({...filters, text: {...filters.text, [activeFilter.toLowerCase()]: filterField}})
     }
