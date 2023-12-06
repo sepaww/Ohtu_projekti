@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Form, Button, Container } from 'react-bootstrap'
 import refservice from '../Services/Refservice'
 
