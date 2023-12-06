@@ -29,3 +29,10 @@ The Removed Entries Are Deleted In Real Time
     Row Count Should Be  1
     Delete One Row
 
+Upon Removal The User Is Alerted If They Are Sure Of The Deletion
+    Add Premade Article
+    Affirmation Should Not Be Visible
+    Delete one Row Without Affirmation
+    Affirmation Should Be Visible
+    Confirm Deletion
+    Affirmation Should Not Be Visible
