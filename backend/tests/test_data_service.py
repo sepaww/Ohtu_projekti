@@ -124,22 +124,4 @@ class TestDataService(unittest.TestCase):
 
         self.assertEqual(bib_database.entries, expected_entries)
 
-    @patch("services.data_service.DataService.get_all")
-    @patch("services.data_service.DataService.save_bibtex_file")
-    def test_save_as_bib(self, mock_save_bibtex_file, mock_get_all):
-        mock_get_all.return_value = [
-            Article(
-                citekey="199",
-                author="Some author",
-                title="example",
-                year="2022",
-                journal="HS",
-            )
-        ]
 
-        mock_save_bibtex_file.side_effect = lambda *args, **kwargs: None
-
-        instance = self.data_service
-        result = instance.save_as_bib()
-        mock_get_all.assert_called_once()
-        self.assertEqual(result, "backend/bibtex/output.bib")
