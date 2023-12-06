@@ -32,6 +32,7 @@ class DataService:
             db.session.delete(row)
         db.session.commit()
 
+
     def generate_bibs(self, refs):
         bib_database = BibDatabase()
         for article in refs:
@@ -48,6 +49,7 @@ class DataService:
     def save_as_bib(self):
         refs = self.get_all()
         bib_database = self.generate_bibs(refs)
+
         if "backend" == Path.cwd().name:
             file_path = Path.cwd() / "bibtex" / "output.bib"
         else:
@@ -59,4 +61,3 @@ class DataService:
             bibfile.write(writer.write(bib_database))
 
         return str(file_path)
-    
