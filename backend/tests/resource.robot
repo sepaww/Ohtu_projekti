@@ -1,10 +1,12 @@
 *** Settings ***
 Library  SeleniumLibrary
 Library  ./AppLibrary.py
-
+Library    OperatingSystem
+Library    BuiltIn
+Library    Collections
 *** Variables ***
 ${SERVER}  localhost:5173
-${DELAY}  0.1 seconds
+${DELAY}  0.0 seconds
 ${HOME_URL}  http://${SERVER}/index.html
 
 
@@ -82,6 +84,7 @@ Set Year Filter
 
 Set Title Filter
     [Arguments]  ${title}
+    Sleep  1
     Click Element  filter-select-button-1
     Sleep  1
     Click Element  title-filter
@@ -90,6 +93,7 @@ Set Title Filter
 
 Set Author Filter
     [Arguments]  ${author}
+    sleep  1
     Click Element  filter-select-button-1
     Sleep  1
     Click Element  auth-filter
@@ -98,6 +102,7 @@ Set Author Filter
 
 Set All Filter
     [Arguments]  ${author}
+    Sleep  1
     Click Element  filter-select-button-1
     Sleep  1
     Click Element  all-filter
@@ -162,6 +167,22 @@ Empty The table
     END
     Sleep  1
     Go To Main Page
+
+Delete one Row Without Affirmation
+    Wait Until Element Is Visible    id:entrylist
+    ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/td[6]/button  
+    Click Element  ${button} 
+    Sleep  1
+
+Affirmation Should Not Be Visible
+    Page Should Not Contain Element    id=dialog-delete
+
+Affirmation Should Be Visible
+    Page Should Contain Element    id=dialog-delete
+
+Confirm Deletion
+    Click Button    dialog-delete
+    Sleep  1
 
 Delete One Row
     Wait Until Element Is Visible    id:entrylist
@@ -229,3 +250,26 @@ Filter By Title
 Filter By Author
     [Arguments]  ${value}
     Set Author Filter  ${value}
+
+Download the Bibtext File
+    Click Element  export
+
+Check If File Downloaded
+    ${HOME}=    Evaluate    os.path.expanduser
+    Log    Home Folder: ${HOME}
+    ${file_exists}=    Run Keyword And Return Status    Test File Exists    ${HOME}/Downloads/output.bib
+    Run Keyword If    not ${file_exists}    Log    File not downloaded yet
+    File Should Exist    ${HOME}/Downloads/output.bib
+    #[Return]    ${result}
+
+Test File Exists
+    [Arguments]    ${file_path}
+    ${result}=    Run Keyword And Return Status    File Should Exist    ${file_path}
+    [Return]    ${result}
+
+File Should Be Correctly Formatted
+    Set Global Variable    ${file_path}      ${CURDIR}${/}..${/}bibtex${/}output.bib
+    ${file_content}    Get File    ${file_path}
+    ${expected_content}  Get File  ${CURDIR}/sample.bib 
+    Should Be Equal As Strings    ${file_content}    ${expected_content}
+
