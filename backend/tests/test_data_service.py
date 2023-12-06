@@ -14,7 +14,7 @@ class TestDataService(unittest.TestCase):
             "author": "Some author",
             "journal": "HS",
         }
-        article_mock = Mock(spec=Article)
+        
 
     def test_data_service_integration(self):
         with patch("services.data_service.db.session.add") as mock_add, patch(
@@ -56,7 +56,6 @@ class TestDataService(unittest.TestCase):
             mock_query.return_value.filter_by.assert_called_once_with(citekey="123")
             mock_query.return_value.filter_by.return_value.first.assert_called_once()
             if mock_article:
-                
                 self.assertTrue(result)
 
     def test_data_service_delete_fail(self):
@@ -84,3 +83,63 @@ class TestDataService(unittest.TestCase):
         mock_session.execute.assert_called_once()
         mock_result.scalars.assert_called_once()
         mock_session.commit.assert_called_once()
+
+    def test_generate_bib(self):
+        article1 = Article(
+            citekey="123",
+            author="Author1",
+            title="Title1",
+            year="2022",
+            journal="Journal1",
+        )
+        article2 = Article(
+            citekey="456",
+            author="Author2",
+            title="Title2",
+            year="2021",
+            journal="Journal2",
+        )
+        refs = [article1, article2]
+
+        bib_database = self.data_service.generate_bibs(refs)
+
+        expected_entries = [
+            {
+                "ENTRYTYPE": "article",
+                "ID": "123",
+                "author": "Author1",
+                "title": "Title1",
+                "year": "2022",
+                "journal": "Journal1",
+            },
+            {
+                "ENTRYTYPE": "article",
+                "ID": "456",
+                "author": "Author2",
+                "title": "Title2",
+                "year": "2021",
+                "journal": "Journal2",
+            },
+        ]
+
+        self.assertEqual(bib_database.entries, expected_entries)
+
+    @patch("services.data_service.DataService.get_all")
+    @patch("services.data_service.DataService.save_bibtex_file")
+    def test_save_as_bib(self, mock_save_bibtex_file, mock_get_all):
+        mock_get_all.return_value = [
+            Article(
+                citekey="199",
+                author="Some author",
+                title="example",
+                year="2022",
+                journal="HS",
+            )
+        ]
+
+        mock_save_bibtex_file.side_effect = lambda *args, **kwargs: None
+
+        instance = self.data_service
+        result = instance.save_as_bib()
+        mock_get_all.assert_called_once()
+        self.assertEqual(result, "backend/bibtex/output.bib")
