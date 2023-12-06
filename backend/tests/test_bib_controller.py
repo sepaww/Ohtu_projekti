@@ -20,7 +20,6 @@ class BibControllerTestCase(unittest.TestCase):
             "Journal": "HS ",
             "type": "Journal",
         }
-
         self.client = self.app.test_client()
 
     def tearDown(self):
