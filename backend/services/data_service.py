@@ -1,3 +1,4 @@
+from pathlib import Path
 from models.article import Article, db
 import bibtexparser
 from bibtexparser.bwriter import BibTexWriter
@@ -12,7 +13,7 @@ class DataService:
         if payload.pop("type") == "article":
             new = Article(**payload)
             new.save()
-            
+
             return new
 
     def delete_article(self, citekey):
@@ -36,21 +37,23 @@ class DataService:
         bib_database = BibDatabase()
         for article in refs:
             entry = {
-                'ENTRYTYPE': 'article',
-                'ID': article.citekey,
-                'author': article.author,
-                'title': article.title,
-                'year': article.year,
-                'journal': article.journal,
+                "ENTRYTYPE": "article",
+                "ID": article.citekey,
+                "author": article.author,
+                "title": article.title,
+                "year": article.year,
+                "journal": article.journal,
             }
             bib_database.entries.append(entry)
 
+        if "backend" == Path.cwd().name:
+            file_path = Path.cwd() / "bibtex" / "output.bib"
+        else:
+            file_path = Path.cwd() / "backend" / "bibtex" / "output.bib"
 
-        file_path = "backend/bibtex/output.bib"
-       
-        with open(file_path, 'w') as bibfile:
+        with open(file_path, "w") as bibfile:
+            print(Path.cwd())
             writer = BibTexWriter()
             bibfile.write(writer.write(bib_database))
 
-        return file_path
-    
+        return str(file_path)
