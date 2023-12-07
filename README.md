@@ -55,6 +55,9 @@ Tiedoston .pylintrc määrittelemät tarkistukset suoritetaan komennolla:
 poetry run pylint backend
 ```
 
+## Lisenssi
+
+Sovellus on lisensoitu MIT-lisenssillä. Sovellusta voi käyttää, muokata, kopioida ja jakaa ilman rajoituksia, kunhan alkuperäinen MIT-lisenssi ja tekijänoikeushuomautus säilytetään. Tarkemmat lisenssiä koskevat tiedot löytyvät tiedstosta [LICENSE](https://github.com/sepaww/Ohtu_projekti/blob/main/LICENSE).
 
 ## Definition of done
 
