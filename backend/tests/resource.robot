@@ -7,7 +7,7 @@ Library    Collections
 *** Variables ***
 ${SERVER}  localhost:5173
 ${DELAY}  0.0 seconds
-${HOME_URL}  http://${SERVER}/index.html
+${HOME_URL}  http://${SERVER}
 
 
 *** Keywords ***
@@ -21,7 +21,7 @@ Open And Configure Browser
 
 
 Main Page Should Be Open
-    Title Should Be  Vite + React
+    Title Should Be  Bibmanager by Ryhmä2!
 
 
 Go To Main Page
@@ -84,27 +84,27 @@ Set Year Filter
 
 Set Title Filter
     [Arguments]  ${title}
-    Sleep  1
+    Sleep  100ms
     Click Element  filter-select-button-1
-    Sleep  1
+    Sleep  100ms
     Click Element  title-filter
     Input Text  filter_word  ${title}
     Click Element  add_filter
 
 Set Author Filter
     [Arguments]  ${author}
-    sleep  1
+    sleep  100ms
     Click Element  filter-select-button-1
-    Sleep  1
+    Sleep  100ms
     Click Element  auth-filter
     Input Text  filter_word  ${author}
     Click Element  add_filter
 
 Set All Filter
     [Arguments]  ${author}
-    Sleep  1
+    Sleep  100ms
     Click Element  filter-select-button-1
-    Sleep  1
+    Sleep  100ms
     Click Element  all-filter
     Input Text  filter_word  ${author}
     Click Element  add_filter

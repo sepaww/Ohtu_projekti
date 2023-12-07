@@ -9,7 +9,7 @@ from controllers.bib_controller import bib_controller
 def create_app():
     app = Flask(
         __name__,
-        static_url_path="",
+        static_url_path="/",
         static_folder="../frontend/dist",
     )
 
@@ -21,6 +21,8 @@ def create_app():
 
     app.register_blueprint(bib_controller)
 
-    CORS(app)
+    @app.route('/')
+    def index():
+        return app.send_static_file('index.html')
 
     return app
