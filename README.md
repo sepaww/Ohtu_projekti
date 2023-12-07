@@ -1,9 +1,9 @@
-# Ohtu_projekti
+# Viitesovellus
 
 ![GHA_workflow_badge](https://github.com/sepaww/Ohtu_projekti/workflows/CI/badge.svg) 
 [![codecov](https://codecov.io/gh/sepaww/Ohtu_projekti/graph/badge.svg?token=DKGEKUINOQ)](https://codecov.io/gh/sepaww/Ohtu_projekti)
 
-## Testikattavuus Graafi
+## Testikattavuusgraafi
 ![coverage graph](https://codecov.io/gh/sepaww/Ohtu_projekti/graphs/sunburst.svg?token=DKGEKUINOQ)
 
 ## Linkit
@@ -57,7 +57,7 @@ poetry run pylint backend
 
 ## Lisenssi
 
-Sovellus on lisensoitu MIT-lisenssillä. Sovellusta voi käyttää, muokata, kopioida ja jakaa ilman rajoituksia, kunhan alkuperäinen MIT-lisenssi ja tekijänoikeushuomautus säilytetään. Tarkemmat lisenssiä koskevat tiedot löytyvät tiedstosta [LICENSE](https://github.com/sepaww/Ohtu_projekti/blob/main/LICENSE).
+Sovellus on lisensoitu MIT-lisenssillä. Sovellusta voi käyttää, muokata, kopioida ja jakaa ilman rajoituksia, kunhan alkuperäinen MIT-lisenssi ja tekijänoikeushuomautus säilytetään. Tarkemmat lisenssiä koskevat tiedot löytyvät tiedostosta [LICENSE](https://github.com/sepaww/Ohtu_projekti/blob/main/LICENSE).
 
 ## Definition of done
 
