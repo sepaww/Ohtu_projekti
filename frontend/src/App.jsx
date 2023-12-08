@@ -4,7 +4,6 @@ import TimedAlert from './components/timedalert'
 import Mainbar from './components/navigation'
 import RefForm from './components/form'
 import Reftable from './components/reftable'
-import Download from './components/download'
 import refservice from './Services/Refservice'
 
 export default function App () {
@@ -29,7 +28,6 @@ export default function App () {
       <Mainbar/>
       <TimedAlert msg={alert}/>
       <RefForm setRefs={setRefs} refs={refs} entryTypes={entryTypes} setAlert={setAlert}/>
-      <Download/>
       <Reftable refs={refs} setRefs={setRefs} setAlert={setAlert}/>
     </Container>
   )

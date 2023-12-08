@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Form, InputGroup, Stack, Button, Container} from "react-bootstrap";
+import { Form, InputGroup, Stack, Button, Container, Collapse} from "react-bootstrap";
 import refservice from "../Services/Refservice";
 import { useState } from "react";
 
@@ -130,26 +130,27 @@ const RefForm = ({setRefs, refs, entryTypes, setAlert}) => {
 
     return (
       <Container className="px-2"> 
-        <Form noValidate method="post" onSubmit={handleSubmit} validated={validated}> 
-          <TypeSelect refType={refType} handleTypeChange={handleTypeChange} entryTypes={entryTypes}/>
-          <Stack gap="2">
-            {
-            refType ? entryTypes[refType].map((input) => 
-            <Inputfield 
+        <Form method="post" onSubmit={handleSubmit} validated={validated}> 
+        <TypeSelect setRefType={setRefType} entryTypes={Object.keys(entryTypes)}/>
+          <Collapse in={refType}> 
+            <Stack gap="2"> {
+              refType &&
+              entryTypes[refType].map((input) => <Inputfield 
               key={input}
               input={fields.find(o => o.name === input)}
               inputValue={formValues[input]}
               setInputValue={v => setFormValues({...formValues, [input]: v})}
-            />
-            ) :
-            <h5>Start by selecting ref type</h5>
+              > 
+              </Inputfield>
+                ) 
+              }
+            </Stack>
+            </Collapse>
+              {
+              refType? 
+                <Button type="submit">Submit Reference</Button> : 
+                <Button disabled type="submit">Select to Submit</Button>
             }
-          </Stack>
-          {
-          refType ?
-          <Button type="submit">Submit Reference</Button> : 
-          <Button disabled type="submit">Select to Submit</Button>
-          }
         </Form>
       </Container>
     )

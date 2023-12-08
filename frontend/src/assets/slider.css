@@ -1,0 +1,34 @@
+.range-slider {
+
+    height: 6px;
+    background: #ddd;
+    border-radius: 4px;
+}
+
+.range-slider .range-slider__range {
+    width: 100%;
+    height: 0.5rem;
+    background-color: #0d6dfd94;
+    transition: #0d6efd 0.15s ease-in-out, lightgray 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+}
+.range-slider .range-slider__range[data-active] {
+    background-color: rgb(59, 136, 252);
+    height: 8px;
+}
+.range-slider .range-slider__thumb {
+    box-shadow: 1px rgb(64, 0, 255);
+    width: 1.2rem;
+    height: 1.2rem;
+    background: #0d6efd;
+    border: 2px;
+    transition: transform .3s;
+}
+
+.range-slider .range-slider__thumb[data-active] {
+    background: #003f9d;
+    border: 1px;
+    border-color: #0048b3;
+    transform: translate(-50%, -50%) scale(1.25);
+    transition: transform .5s;
+}
