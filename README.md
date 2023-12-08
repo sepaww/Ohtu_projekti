@@ -68,3 +68,5 @@ User story on valmis kun
 - Testaus on automatisoitu
 - Koodin sisäinen laatu on hyvä
 - Product owner hyväksyy user storyn
+
+  
