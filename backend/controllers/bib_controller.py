@@ -32,7 +32,7 @@ def delete_ref(citekey):
             {"message": f"Article with citekey {citekey} deleted successfully"},
             204,
         )
-    return {"message": f"Failed to delete article with citekey."}, 500
+    return {"message": "Failed to delete article with citekey."}, 500
 
 
 @bib_controller.route("/test/reset", methods=["GET"])
