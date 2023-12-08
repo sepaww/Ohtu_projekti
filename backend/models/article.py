@@ -11,8 +11,8 @@ class Entry(MappedAsDataclass, DeclarativeBase):
         try:
             db.session.add(self)
             db.session.commit()
-        except IntegrityError:
-            raise ValueError(f"Citekey {self.citekey} already exists.")
+        except IntegrityError as exc:
+            raise ValueError(f"Citekey {self.citekey} already exists.") from exc
 
     def delete(self):
         db.session.delete(self)
