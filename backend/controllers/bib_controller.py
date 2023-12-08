@@ -18,8 +18,8 @@ def add_refs():
     payload = request.get_json()
 
     try:
-        new = data_service.save_data(payload)
-        return jsonify(new), 201
+        _ = data_service.save_data(payload)
+        return payload, 201
     except ValueError as e:
         return {"message": str(e)}, 400
 

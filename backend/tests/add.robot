@@ -15,7 +15,7 @@ User can add a valid article
     Select Article
     Set Citekey  2
     Set Title  Book of rhymes
-    Set Author  Eminem
+    Set Author  Marshall Bruce Mathers III
     Set Journal  Jonne
     Set Year  69
     #Set Number  3

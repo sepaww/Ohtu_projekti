@@ -8,17 +8,26 @@ const getAll = async () => {
 }
 
 const postNew = async (object) => {
-  console.log(object)
-  const ConfigHeaders = {
-    "content-type": "application/json"
+  try{
+    const response = await axios({
+      url: baseUrl, 
+      method: "post",
+      data: object,
+      headers: {"content-type": "application/json"},
+    })
+
+    console.log(response.data)
+
+    if (response.status === 201) {
+      return response.data
+    }
+  } catch(error){
+    if (error.response) {
+      throw new Error(error.response.data.message)
+    } else if (error.request) {
+      throw new Error("Failed to connect to server")
+    }
   }
-  const response = await axios({url: baseUrl,
-                          method: "post",
-                          data: object,
-                          headers: ConfigHeaders
-                          })
-  console.log(response)
-  return response
 }
 
 const deleteRef = async (citekey) => {
@@ -39,13 +48,14 @@ const download = async () => {
       responseType: 'blob'
     })
 
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', readFilename(response));
-    document.body.appendChild(link);
-    link.click();
-  } catch(error) {
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', readFilename(response))
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+  } catch(error){
     console.log("bonkers")
   }
 }

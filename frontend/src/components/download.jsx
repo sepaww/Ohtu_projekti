@@ -9,7 +9,7 @@ export default function Download() {
 
     return (
         <Container className="p-2">
-            <Form onSubmit={handleSubmit} text-right>
+            <Form onSubmit={handleSubmit}>
                 <Button id="export" variant="dark" type="submit" className='float-right'>
                     <img src="/BibTeX_logo.png" style={{ height: "1em" }}/>
                 </Button>

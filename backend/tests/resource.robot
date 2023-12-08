@@ -9,7 +9,6 @@ ${SERVER}  localhost:5173
 ${DELAY}  0.0 seconds
 ${HOME_URL}  http://${SERVER}
 
-
 *** Keywords ***
 Open And Configure Browser
     ${options}  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys
@@ -136,7 +135,7 @@ Add Premade Article
     Select Article
     Set Citekey  22
     Set Title  Book of rhymes 2
-    Set Author  Eminem
+    Set Author  Marshall Bruce Mathers III
     Set Journal  Jonne
     Set Year  70
     #Set Number  3
@@ -147,7 +146,7 @@ Add Another Premade Article
     Select Article
     Set Citekey  23
     Set Title  Book of rhymes 3
-    Set Author  Eminem
+    Set Author  Marshall Bruce Mathers III
     Set Journal  Jonne
     Set Year  71
     #Set Number  3
@@ -227,7 +226,7 @@ Add Article By Values
 Mass Add Articles
     Add Article By Values  AP_news1  No. 8 Alabama knocks off No. 1 Georgia 27-24 for SEC title. Both teams await postseason fate  PAUL NEWBERRY  2023  Associated Press
 
-    Add Article By Values  source_me  apples are not real  meikä  2023   imagination  
+    Add Article By Values  source_me  apples are not real  meika laine  2023   imagination  
 
     Add Article By Values  AP_news2  No. 5 Texas Upsets No. 2 Oklahoma 35-31 in Big 12 Championship. Playoff picture unfolds.  JESSICA ANDERSON  2021  Associated Press
 

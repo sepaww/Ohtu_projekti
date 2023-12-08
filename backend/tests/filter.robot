@@ -13,7 +13,7 @@ User Can Filter The References By The Value Of Year
     Row Count Should Be  3
     Table Row Should Contain    entrylist    1     PAUL NEWBERRY Associated Press No. 8 Alabama knocks off No. 1 Georgia 27-24 for SEC title. Both teams await postseason fate 2023 AP_news1 Delete
     
-    Table Row Should Contain    entrylist    2   meikä imagination apples are not real 2023 source_me Delete
+    Table Row Should Contain    entrylist    2   meika laine imagination apples are not real 2023 source_me Delete
 
     Table Row Should Contain    entrylist    3    JASON ADAMS Associated Press NASA Announces Successful Launch of Next-Generation Space Telescope. Astronomers eager for new discoveries. 2023 AP_news6 Delete 
     Filter By Year  2020  2020
