@@ -1,0 +1,18 @@
+[
+    {"name": "citekey", "placeholder":"\\cite{key}"},
+    {"name": "title", "placeholder":"Example Title"}, 
+    {"name": "author", "placeholder":"Example Author", "feedback": "author should be ' and ' delimited list of names with 2-5 parts"}, 
+    {"name": "journal", "placeholder":"Journal Name"},
+    {"name": "booktitle", "placeholder": "20th Annual Conference on Bro Science"},
+    {"name": "year", "placeholder": "Year published", "feedback": "year should contain one or more 1-4-digit numbers"},
+    {"name": "volume", "placeholder": ""},
+    {"name": "number", "placeholder": "6"},
+    {"name": "pages", "placeholder": "111-222 or 111,222"},
+    {"name": "publisher", "placeholder": "WSOY AB"},
+    {"name": "adress", "placeholder": "Mannerheimintie 1"},
+    {"name": "howpublished", "placeholder": "Distributed in unicafe"}, 
+    {"name": "Month", "placeholder": "Jan"},
+    {"name": "School", "placeholder": "Uni Of Helsingi"}
+  ]
+
+ 
