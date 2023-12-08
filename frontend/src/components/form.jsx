@@ -58,14 +58,7 @@ const Inputfield = ({ input, inputValue, setInputValue }) => {
   )
 }
 
-const TypeSelect = ({ refType, setRefType, setFormValues, entryTypes }) => {
-  const handleChange = e => {
-    setRefType(e.target.value)
-    if (refType) {
-      setFormValues(entryTypes[refType].reduce((a, k) => ({...a, [k]: ""}), {}))
-    }
-  }
-
+const TypeSelect = ({ refType, handleTypeChange, entryTypes }) => {
   return(
       <div> 
         <Form.Select 
@@ -74,7 +67,7 @@ const TypeSelect = ({ refType, setRefType, setFormValues, entryTypes }) => {
           size="lg"
           className="m-2"
           value={refType}
-          onChange={handleChange}
+          onChange={handleTypeChange}
         >
           <option value={""}>Select Type to start</option>
           {Object.keys(entryTypes).map((t) => <option value={t} key={t}>{t}</option>)}
@@ -110,6 +103,14 @@ const RefForm = ({setRefs, refs, entryTypes, setAlert}) => {
       }
     }
 
+    const handleTypeChange = e => {
+      setRefType(e.target.value)
+      setValidated(false)
+      if (refType) {
+        setFormValues(entryTypes[refType].reduce((a, k) => ({...a, [k]: ""}), {}))
+      }
+    }
+
     const fields = [
       {name: "citekey", placeholder:"\\cite{key}"},
       {name: "title", placeholder:"Example Title"}, 
@@ -130,7 +131,7 @@ const RefForm = ({setRefs, refs, entryTypes, setAlert}) => {
     return (
       <Container className="px-2"> 
         <Form noValidate method="post" onSubmit={handleSubmit} validated={validated}> 
-          <TypeSelect refType={refType} setRefType={setRefType} setFormValues={setFormValues} entryTypes={entryTypes}/>
+          <TypeSelect refType={refType} handleTypeChange={handleTypeChange} entryTypes={entryTypes}/>
           <Stack gap="2">
             {
             refType ? entryTypes[refType].map((input) => 
