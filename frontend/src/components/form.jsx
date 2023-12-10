@@ -36,9 +36,9 @@ const RefForm = ({setRefs, refs, entryTypes, setAlert}) => {
       event.preventDefault()
       const form = event.target
       if (form.checkValidity()) {
-        const formData = new FormData(form)
-        const formJson = Object.fromEntries(formData.entries());
         try{
+          const formData = new FormData(form)
+          const formJson = Object.fromEntries(formData.entries());
           const data = await refservice.postNew(formJson)
           setRefs(refs.concat(data))
           setValidated(false)
