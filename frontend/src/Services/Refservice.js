@@ -31,8 +31,12 @@ const postNew = async (object) => {
 }
 
 const deleteRef = async (citekey) => {
-  const response = await axios.delete(`${baseUrl}/${citekey}`)
-  return response
+  try {
+    const response = await axios.delete(`${baseUrl}/${citekey}`)
+    return response
+  } catch (error) {
+    throw new Error("Failed to delete reference");
+  }
 }
 
 const download = async () => {
@@ -56,7 +60,8 @@ const download = async () => {
     link.click()
     link.remove()
   } catch(error){
-    console.log("bonkers")
+    console.error("Error while downloading reference:", error);
+    throw new Error("Failed to download reference");
   }
 }
 
