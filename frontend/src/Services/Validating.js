@@ -1,13 +1,13 @@
 function pattern(field) {
     switch(field) {
       case "author": {
-        const part = /\b(?!and\s*)[\w\}\{\\'"\-ÄäÖöÅå]+\.?,?/ //eslint-disable-line
+        const part = /(?!and(\s|$))[\p{Letter}\}\{\\'"\-]+\.?,?/ //eslint-disable-line
         const name = `${part.source}( ${part.source}){1,4}`
-        const author = `^${name}( and ${name})*$`
+        const author = `${name}( and ${name})*`
         return author
       }
       case "year": {
-        const year = /^\D*\d{1,4}(\D+\d{1,4})*\D*$/
+        const year = /\D*\d{1,4}(\D+\d{1,4})*\D*/
         return year.source
       }
       default:
