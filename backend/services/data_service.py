@@ -32,19 +32,18 @@ class DataService:
 
         return new
 
-    def delete_ref(self, citekey):
-        all_entries = self.get_all()
-        try:
+    def filter_entry(self, all_entries, citekey): 
             for entry in all_entries:
                 if entry.citekey == citekey:
-                    if isinstance(entry, Article):
-                        Article.delete()
-                    if isinstance(entry, Book):
-                        Book.delete()
-                    if isinstance(entry, Inproceedings):
-                        Inproceedings.delete()
+                    entry.delete()
                     return True
+            return False
 
+    def delete_ref(self, citekey):
+        all_entries = self.get_all()
+
+        try:
+            return self.filter_entry(all_entries, citekey)
         except Exception as e:
             return False, e
 

@@ -11,8 +11,9 @@
     {"name": "publisher", "placeholder": "WSOY AB"},
     {"name": "adress", "placeholder": "Mannerheimintie 1"},
     {"name": "howpublished", "placeholder": "Distributed in unicafe"}, 
-    {"name": "Month", "placeholder": "Jan"},
-    {"name": "School", "placeholder": "Uni Of Helsingi"}
+    {"name": "month", "placeholder": "Jan"},
+    {"name": "school", "placeholder": "Uni Of Helsingi"},
+    {"name": "book_title", "placeholder": "title of the book"}
   ]
 
  
