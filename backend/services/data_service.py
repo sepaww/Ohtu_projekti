@@ -70,17 +70,14 @@ class DataService:
         return bib_database
     
     def save_as_bib(self):
-        refs = self.get_all()
-        bib_database = self.generate_bibs(refs)
+    refs = self.get_all()
+    bib_database = self.generate_bibs(refs)
 
-        if "backend" == Path.cwd().name:
-            file_path = Path.cwd() / "bibtex" / "output.bib"
-        else:
-            file_path = Path.cwd() / "backend" / "bibtex" / "output.bib"
+    file_path = Path.cwd() / ("bibtex" if "backend" == Path.cwd().name else "backend/bibtex") / "output.bib"
 
-        with open(file_path, "w") as bibfile:
-            print(Path.cwd())
-            writer = BibTexWriter()
-            bibfile.write(writer.write(bib_database))
+    with open(file_path, "w") as bibfile:
+        writer = BibTexWriter()
+        bibfile.write(writer.write(bib_database))
 
-        return str(file_path)
+    return str(file_path)
+
