@@ -45,6 +45,7 @@ def upgrade():
 
 
 def downgrade():
+    op.drop_table('article')
     op.drop_table('book')
     op.drop_table('inproceedings')
     
