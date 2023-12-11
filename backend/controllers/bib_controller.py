@@ -1,6 +1,6 @@
 from flask import jsonify, request, Blueprint, send_file
 from services.data_service import DataService
-from models.article import get_schema
+from models.entry import get_schema
 
 bib_controller = Blueprint("bib", __name__)
 
@@ -26,7 +26,7 @@ def add_refs():
 
 @bib_controller.route("/api/refs/<citekey>", methods=["DELETE"])
 def delete_ref(citekey):
-    ref_to_be_deleted = data_service.delete_article(citekey)
+    ref_to_be_deleted = data_service.delete_ref(citekey)
     if ref_to_be_deleted:
         return (
             {"message": f"Article with citekey {citekey} deleted successfully"},

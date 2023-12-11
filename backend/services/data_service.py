@@ -1,27 +1,49 @@
 from pathlib import Path
 from models.article import Article, db
+from models.book import Book
+from models.inproceedings import Inproceedings
 import bibtexparser
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
+from sqlalchemy import union_all
 
 
 class DataService:
     def get_all(self):
-        return Article.all()
+        articles_query = Article.all()
+        books_query = Book.all()
+        inproceedings_query = Inproceedings.all()
+        entries = articles_query + books_query + inproceedings_query
+        return entries
 
     def save_data(self, payload):
-        if payload.pop("type") == "article":
+        type = payload.pop("type")
+        if type == "article":
             new = Article(**payload)
             new.save()
 
-            return new
+        if type == "book":
+            new = Book(**payload)
+            new.save()
 
-    def delete_article(self, citekey):
+        if type == "inproceedings":
+            new = Inproceedings(**payload)
+            new.save()
+
+        return new
+
+    def delete_ref(self, citekey):
+        all_entries = self.get_all()
         try:
-            article = db.session.query(Article).filter_by(citekey=citekey).first()
-            if article:
-                article.delete()
-                return True
+            for entry in all_entries:
+                if entry.citekey == citekey:
+                    if isinstance(entry, Article):
+                        Article.delete()
+                    if isinstance(entry, Book):
+                        Book.delete()
+                    if isinstance(entry, Inproceedings):
+                        Inproceedings.delete()
+                    return True
 
         except Exception as e:
             return False, e
@@ -46,6 +68,7 @@ class DataService:
             }
             bib_database.entries.append(entry)
         return bib_database
+    
     def save_as_bib(self):
         refs = self.get_all()
         bib_database = self.generate_bibs(refs)
