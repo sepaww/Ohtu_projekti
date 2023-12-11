@@ -18,19 +18,12 @@ class DataService:
 
     def save_data(self, payload):
         type = payload.pop("type")
-        if type == "article":
-            new = Article(**payload)
-            new.save()
-
-        if type == "book":
-            new = Book(**payload)
-            new.save()
-
-        if type == "inproceedings":
-            new = Inproceedings(**payload)
-            new.save()
-
-        return new
+        entry_classes = {"article": Article, "book": Book, "inproceedings": Inproceedings}
+        entry_class = entry_classes.get(type)
+        if entry_class:
+            new_entry = entry_class(**payload)
+            new_entry.save()
+            return new_entry
 
     def filter_entry(self, all_entries, citekey): 
             for entry in all_entries:
@@ -67,7 +60,7 @@ class DataService:
             }
             bib_database.entries.append(entry)
         return bib_database
-    
+
     def save_as_bib(self):
         refs = self.get_all()
         bib_database = self.generate_bibs(refs)
