@@ -14,7 +14,7 @@ ${HOME_URL}  http://${SERVER}
 Open And Configure Browser
     ${options}  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys
     #Kommentoi alempi rivi niin testit näkyvät ruudulla 
-    ##Call Method  ${options}  add_argument  --headless
+    Call Method  ${options}  add_argument  --headless
     Open Browser  browser=firefox  options=${options}
     Set Selenium Speed  ${DELAY}
 
