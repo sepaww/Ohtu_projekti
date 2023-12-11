@@ -24,7 +24,7 @@ export default function App () {
   if (loading) return(<h1> loading </h1>)
 
   return (
-    <Container className='lg px-0'> 
+    <Container className='container-fluid'> 
       <Mainbar/>
       <TimedAlert msg={alert}/>
       <RefForm setRefs={setRefs} refs={refs} entryTypes={entryTypes} setAlert={setAlert}/>

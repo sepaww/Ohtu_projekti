@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Table, Button, Badge, Container} from "react-bootstrap"
+import { Table, Button, Badge} from "react-bootstrap"
 import { useState } from "react"
 import Toolbar from "./toolbar"
 import DeleteModal from "./delete"
@@ -63,7 +63,7 @@ export default function Reftable ({refs, setRefs, setAlert}) {
     const headers = ["author", "journal", "title", "year", "citekey"] // ordering is fixed here
 
     return (
-        <Container> 
+        <div> 
             <Toolbar filters={filters} setFilters={setFilters} limits={limits}>  </Toolbar>
             <Table striped id="entrylist"> 
                 <thead> 
@@ -79,6 +79,6 @@ export default function Reftable ({refs, setRefs, setAlert}) {
                 </tbody>
             </Table>
             <DeleteModal toBeDeleted={toBeDeleted} setToBeDeleted={setToBeDeleted} refs={refs} setRefs={setRefs} setAlert={setAlert}/>
-        </Container>
+        </div>
     )
 }

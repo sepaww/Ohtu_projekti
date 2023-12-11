@@ -3,7 +3,7 @@ import Download from "./download"
 
 const Mainbar = () => {
     return (
-      <Navbar className="bg-body-tertiary" expand="sm"> 
+      <Navbar className="bg-body-tertiary" expand="sm" > 
         <Container className="mx-1"> 
         <Navbar.Brand>
             <img

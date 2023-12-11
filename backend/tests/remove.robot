@@ -8,6 +8,7 @@ Test Setup  Go To Main Page
 *** Test Cases ***
 User can remove added entries
     Add Premade Article
+    Sleep    500ms
     Add Another Premade Article
     Empty The Table
     Table Should Be Empty

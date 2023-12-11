@@ -37,7 +37,7 @@ export default function Toolbar({ filters, setFilters, limits }) {
     }
 
     return(
-        <Container className='my-2'> 
+        <Container className='my-2 py-2 border rounded bg-light'> 
         <Form>       
             <Stack direction='horizontal' gap={2}> 
             <div className='col-2'> 

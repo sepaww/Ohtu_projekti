@@ -5,7 +5,9 @@ import pattern from "../Services/Validating"
 
 const Inputfield = ({ input, inputValue, setInputValue }) => {
     const [feedback, setFeedback] = useState("")
-  
+    if (input.name === "citekey") {
+      return // dirty hack :)
+    } 
     const handleChange = e => {
       setInputValue(e.target.value)
       e.target.checkValidity() // if invalid will trigger invalid event
@@ -22,8 +24,10 @@ const Inputfield = ({ input, inputValue, setInputValue }) => {
   
     return(
       <div> 
-         <InputGroup hasValidation size="sm" className={`mb-2 ${inputValue && "was-validated"}`}>
-              <InputGroup.Text id="inputGroup-sizing-sm" style={{ textTransform: 'capitalize' }}>{input.name}</InputGroup.Text>
+         <InputGroup hasValidation size="sm" className={`mb-2 my-3 ${inputValue && "was-validated"}`}>
+              <InputGroup.Text id="inputGroup-sizing-sm" style={{ textTransform: 'capitalize' }} className="col-2 mx-auto">
+                <div className="mx-auto"> {input.name}</div>
+              </InputGroup.Text>
               <Form.Control
                 placeholder={input.placeholder}
                 aria-label="Small"

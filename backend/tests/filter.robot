@@ -20,6 +20,7 @@ User Can Filter The References By The Value Of Year
     Table Row Should Contain    entrylist    1   EMMA MARTIN Associated Press Breakthrough in Medical Research: Promising Treatment for Common Cold Discovered. Potential global impact. 2020 AP_news5 Delete
     
 User Can FIlter The References By The Value Of year In The Range Of Multiple Years
+    Sleep    100ms
     Filter By Year   2020  2021
     Row Count Should Be  3
     Table Row Should Contain    entrylist    1   JESSICA ANDERSON Associated Press No. 5 Texas Upsets No. 2 Oklahoma 35-31 in Big 12 Championship. Playoff picture unfolds. 2021 AP_news2 Delete

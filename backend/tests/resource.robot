@@ -4,6 +4,7 @@ Library  ./AppLibrary.py
 Library    OperatingSystem
 Library    BuiltIn
 Library    Collections
+Library    XML
 *** Variables ***
 ${SERVER}  localhost:5173
 ${DELAY}  0.0 seconds
@@ -13,7 +14,7 @@ ${HOME_URL}  http://${SERVER}
 Open And Configure Browser
     ${options}  Evaluate  sys.modules['selenium.webdriver'].FirefoxOptions()  sys
     #Kommentoi alempi rivi niin testit näkyvät ruudulla 
-    Call Method  ${options}  add_argument  --headless
+    ##Call Method  ${options}  add_argument  --headless
     Open Browser  browser=firefox  options=${options}
     Set Selenium Speed  ${DELAY}
 
@@ -133,6 +134,7 @@ Select MasterThesis
 
 Add Premade Article
     Select Article
+    Sleep    500ms
     Set Citekey  22
     Set Title  Book of rhymes 2
     Set Author  Marshall Bruce Mathers III
@@ -144,6 +146,7 @@ Add Premade Article
 
 Add Another Premade Article
     Select Article
+    Sleep    500ms
     Set Citekey  23
     Set Title  Book of rhymes 3
     Set Author  Marshall Bruce Mathers III
@@ -213,8 +216,10 @@ Table Should Be Empty
     Row Count Should Be  0
 
 Add Article By Values
+    Sleep    100ms
     [Arguments]  ${citekey}  ${title}  ${author}  ${year}  ${journal}
     Select Article
+    Sleep    100ms
     Set Citekey  ${citekey}
     Set Title  ${title}
     Set Author  ${author}
