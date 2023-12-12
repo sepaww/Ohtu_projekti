@@ -1,6 +1,5 @@
 import os  # flask will load .env automatically
 from flask import Flask
-from flask_cors import CORS
 from flask_migrate import Migrate
 from database import db
 from controllers.bib_controller import bib_controller
@@ -15,14 +14,15 @@ def create_app():
 
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
     db.init_app(app)
-    import models  # needed for database schema initialization
+
+    import model  # needed for initial database migrations
 
     migrate = Migrate(app, db)
 
     app.register_blueprint(bib_controller)
 
-    @app.route('/')
+    @app.route("/")
     def index():
-        return app.send_static_file('index.html')
+        return app.send_static_file("index.html")
 
     return app

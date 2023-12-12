@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, Mock
-from services.data_service import DataService, Article
+from services.data_service import DataService, Entry, Article
 
 
 class TestDataService(unittest.TestCase):
@@ -14,7 +14,6 @@ class TestDataService(unittest.TestCase):
             "author": "Some author",
             "journal": "HS",
         }
-        
 
     def test_data_service_integration(self):
         with patch("services.data_service.db.session.add") as mock_add, patch(
@@ -32,7 +31,6 @@ class TestDataService(unittest.TestCase):
 
         self.assertEqual(result, self.payload)
 
-
     @patch("services.data_service.Article.save")
     def test_save(self, mock_article):
         data_service = DataService()
@@ -42,26 +40,23 @@ class TestDataService(unittest.TestCase):
         self.assertEqual(result.author, "Some author")
         self.assertEqual(result.title, "example")
 
-
     def test_data_service_delete_success(self):
         pass
 
-
-
-    def test_reset_database(self):
+    @patch("services.data_service.Entry")
+    def test_reset_database(self, mock_entry):
+        mock_entry.all.return_value = [self.payload]
         mock_session = Mock()
-        mock_result = Mock()
-        mock_session.execute.return_value = mock_result
-        mock_result.scalars.return_value = [Mock()]
 
         with patch("services.data_service.db.session", mock_session):
             self.data_service.reset()
-        mock_session.execute.assert_called_once()
-        mock_result.scalars.assert_called_once()
+
+        mock_session.delete.assert_called_once_with(self.payload)
         mock_session.commit.assert_called_once()
 
     def test_generate_bib(self):
         article1 = Article(
+            type="article",
             citekey="123",
             author="Author1",
             title="Title1",
@@ -69,6 +64,7 @@ class TestDataService(unittest.TestCase):
             journal="Journal1",
         )
         article2 = Article(
+            type="article",
             citekey="456",
             author="Author2",
             title="Title2",
@@ -99,5 +95,3 @@ class TestDataService(unittest.TestCase):
         ]
 
         self.assertEqual(bib_database.entries, expected_entries)
-
-
