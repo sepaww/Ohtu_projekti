@@ -1,8 +1,8 @@
-"""initial migration
+"""first migration
 
-Revision ID: b397b448f7a2
+Revision ID: d5de40bbd765
 Revises: 
-Create Date: 2023-12-12 01:58:50.996749
+Create Date: 2023-12-12 18:24:13.638616
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b397b448f7a2'
+revision = 'd5de40bbd765'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,9 +24,9 @@ def upgrade():
     sa.Column('author', sa.String(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('year', sa.String(), nullable=False),
-    sa.Column('journal', sa.String(), nullable=False),
-    sa.Column('publisher', sa.String(), nullable=False),
-    sa.Column('booktitle', sa.String(), nullable=False),
+    sa.Column('journal', sa.String(), nullable=True),
+    sa.Column('publisher', sa.String(), nullable=True),
+    sa.Column('booktitle', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('citekey')
     )
     # ### end Alembic commands ###

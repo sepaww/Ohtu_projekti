@@ -1,6 +1,5 @@
 from pathlib import Path
 from dataclasses import asdict
-from database import db
 from model import Entry, Article, Book, Inproceedings
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
@@ -24,14 +23,15 @@ class DataService:
         return new
 
     def delete_ref(self, citekey):
-        trash = db.session.get(Entry, citekey)
+        trash = Entry.get(citekey)
+        if trash is None:
+            raise LookupError(f"citekey {citekey} was not found")
+
         trash.delete()
 
     def reset(self):
-        allrows = self.get_all()
-        for row in allrows:
-            db.session.delete(row)
-        db.session.commit()
+        for entry in Entry.all():
+            entry.delete()
 
     def generate_bibs(self, refs):
         bib_database = BibDatabase()
@@ -41,6 +41,7 @@ class DataService:
             entry["ID"] = entry.pop("citekey")
 
             bib_database.entries.append(entry)
+
         return bib_database
 
     def save_as_bib(self):

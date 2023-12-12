@@ -1,12 +1,12 @@
 import unittest
 from unittest.mock import patch, Mock
-from services.data_service import DataService, Entry, Article
+from services.data_service import DataService, Entry, Article, Book
 
 
 class TestDataService(unittest.TestCase):
     def setUp(self):
         self.data_service = DataService()
-        self.payload = {
+        self.article = {
             "type": "article",
             "citekey": "199",
             "year": "1888",
@@ -15,44 +15,52 @@ class TestDataService(unittest.TestCase):
             "journal": "HS",
         }
 
-    def test_data_service_integration(self):
-        with patch("services.data_service.db.session.add") as mock_add, patch(
-            "services.data_service.db.session.commit"
-        ) as mock_commit:
-            article = self.data_service.save_data(self.payload)
-            mock_add.assert_called_once_with(article)
-            mock_commit.assert_called_once()
+        self.book = {
+            "type": "book",
+            "citekey": "200",
+            "year": "2021",
+            "title": "biochemistry",
+            "author": "lehninger",
+            "publisher": "freeman",
+        }
+
+        self.inproceedings = {
+            "type": "inproceedings",
+            "citekey": "201",
+            "year": "2002",
+            "title": "mooc",
+            "author": "mluuk",
+            "booktitle": "acm",
+        }
+
+    @patch("services.data_service.Entry")
+    def test_get_all(self, mock_entry):
+        mock_entry.all.return_value = [Article(**self.article)]
+        result = self.data_service.get_all()
+
+        self.assertEqual(result, [Article(**self.article)])
 
     @patch("services.data_service.Article")
-    def test_get_all(self, mock_article):
-        mock_article.all.return_value = self.payload
+    def test_save_article(self, MockArticle):
+        result = self.data_service.save_data(self.article)
 
-        result = self.payload
+        MockArticle.assert_called_once()
+        result.save.assert_called_once()
 
-        self.assertEqual(result, self.payload)
+    @patch("services.data_service.Entry")
+    def test_data_service_delete_nonexistent(self, mock_entry):
+        mock_entry.get.return_value = None
 
-    @patch("services.data_service.Article.save")
-    def test_save(self, mock_article):
-        data_service = DataService()
-        result = data_service.save_data(self.payload)
-        mock_article.assert_called_once()
-        self.assertIsInstance(result, Article)
-        self.assertEqual(result.author, "Some author")
-        self.assertEqual(result.title, "example")
-
-    def test_data_service_delete_success(self):
-        pass
+        with self.assertRaises(LookupError):
+            self.data_service.delete_ref("9999")
 
     @patch("services.data_service.Entry")
     def test_reset_database(self, mock_entry):
-        mock_entry.all.return_value = [self.payload]
-        mock_session = Mock()
+        mock_book = Mock()
+        mock_entry.all.return_value = [mock_book]
+        self.data_service.reset()
 
-        with patch("services.data_service.db.session", mock_session):
-            self.data_service.reset()
-
-        mock_session.delete.assert_called_once_with(self.payload)
-        mock_session.commit.assert_called_once()
+        mock_book.delete.assert_called_once()
 
     def test_generate_bib(self):
         article1 = Article(

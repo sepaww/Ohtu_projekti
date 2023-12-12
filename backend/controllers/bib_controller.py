@@ -20,7 +20,7 @@ def add_refs():
     try:
         new = data_service.save_data(payload)
         return jsonify(new), 201
-    except ValueError as e:
+    except Exception as e:
         return {"message": str(e)}, 400
 
 
