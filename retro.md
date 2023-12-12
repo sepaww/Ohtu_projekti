@@ -21,3 +21,11 @@ Tulevissa sprinteissä kiinnitetään huomiota siihen, että yhteiset palaveriaj
 hyvissä ajoin, jotta tiimiläisten aikataulut saadaan sovitettua yhteen ilman suurempaa säätämistä. Pyrkimyksenä
 on myös sprint backlogin tunnollinen päivittäminen heti sprintin alusta lähtien sitä mukaa kun taskit valmistuvat.
 Nämä teemat nostettiin keskeisimmiksi kehityskohteiksi.
+
+Retrospektiivi 7.12.
+
+Myös tämä retrospektiivi toteutettiin Start, Stop, Continue, More of, Less of Wheel-tekniikalla.
+
+Todettiin, että toiminnan kehittäminen on onnistunut edellisen retrospektiivin keskustelun perusteella. Suurimmat kehityskohteet, eli tapaamisaikojen sopiminen hyvissä ajoin etukäteen ja backlogin pitäminen ajan tasalla ovat toteutuneet tässä sprintissä hyvin. Myös työnjako on toiminut paremmin. Näitä toimintatapoja ylläpidetään myös viimeisessä sprintissä.
+
+Tulevassa sprintissä lisätään testausta, ja deployays pyritään ottamaan käyttöön automatisoidusti. Haasteena kuluneen sprintin aikana ovat olleet isot merge-konfliktit, joiden ratkomiseen on kulunut aikaa. Jatkossa näitä pyritään välttämään säännöllisellä pushaamisella ja parantamalla entisestään kommunikointia toteutuneista muutoksista.
