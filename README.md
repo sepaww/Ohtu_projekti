@@ -7,9 +7,10 @@
 ![coverage graph](https://codecov.io/gh/sepaww/Ohtu_projekti/graphs/sunburst.svg?token=DKGEKUINOQ)
 
 ## Linkit
-[Product Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/simonena_ad_helsinki_fi/Ed88uF9sw4xFoWAGecS_zvIBGAcMHuNmpuXQZrrZfnn-5g)
+[Product Backlog](https://helsinkifi-my.sharepoint.com/:x:/g/personal/simonena_ad_helsinki_fi/Ed88uF9sw4xFoWAGecS_zvIBGAcMHuNmpuXQZrrZfnn-5g) <br>
+[Raportti](https://helsinkifi-my.sharepoint.com/:w:/g/personal/simonena_ad_helsinki_fi/EYOruLP7rNlKrLWe0fIRKVkB5fD1noQLQWw-nwJK01WWwg?e=JEnmFu)
 
-## [Linkki sovellukseen](https://bibmanager.onrender.com/index.html)
+## [Linkki sovellukseen](https://bibmanager.onrender.com/)
 
 
 ## Käyttöohjeet kehittäjille
