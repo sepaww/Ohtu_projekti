@@ -3,7 +3,7 @@ import { Table, Button, Badge, Container} from "react-bootstrap"
 import { useState } from "react"
 import Toolbar from "./toolbar"
 import DeleteModal from "./delete"
-
+import { Trash3 } from 'react-bootstrap-icons'
 function yearLimits (references)  {
     const values = references.flatMap((o) => o.year.match(/\d+/g)).filter(v => v)
     return {min: Math.min(...values), max: Math.max(...values)}
@@ -34,8 +34,8 @@ function RefRow({ reference, headers, setToBeDeleted }) {
                 <td key={k}><Badge bg="secondary" className="p-2">{reference[k]}</Badge></td> :
                 <td key={k}>{reference[k]}</td>)}
             <td> 
-                <Button variant="danger" size="sm" onClick={() => setToBeDeleted(reference.citekey)}>
-                    Delete
+                <Button variant="outline-danger" size="sm" onClick={() => setToBeDeleted(reference.citekey)} className="icon-link p-2">
+                    <Trash3 size={16}className="mx-1"> Delete </Trash3>
                 </Button>
             </td>
         </tr>
@@ -69,15 +69,15 @@ export default function Reftable ({refs, setRefs, setAlert}) {
         if (refstodisplay.length === 0) return 
         return(
         <Container className="border py-2 my-2 rounded"> 
-            <h5> {type} </h5>
-            <Table striped id={type + 'list'}> 
-                <thead> 
-                    <tr>
-                        {headers.map((r) => <th key={r}>{r}</th>)}
-                        <th>Delete</th>
+            <h4 className="text-capitalize p-2"> {type === "inproceedings" ? type : `${type}s`} </h4>
+            <Table id={type + 'list'} className="table table-hover align-middle"> 
+                <thead className="table-light"> 
+                    <tr className="align-middle">
+                        {headers.map((r) => <th key={r}><div className="text-capitalize"> {r}</div></th>)}
+                        <th> <Trash3 size={20} className="m-2 align-"/> </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="table-group-divider-border-color">
                     {refstodisplay.filter(r => filterCriterion(filters, r)).map((reference) => 
                     <RefRow key={reference.citekey} reference={reference} setToBeDeleted={setToBeDeleted} headers={headers}/>
                     )}                    
