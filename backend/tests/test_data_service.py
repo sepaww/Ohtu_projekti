@@ -1,6 +1,8 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, MagicMock, mock_open
 from services.data_service import DataService, Entry, Article, Book
+from pathlib import Path
+import tempfile
 
 
 class TestDataService(unittest.TestCase):
@@ -47,12 +49,40 @@ class TestDataService(unittest.TestCase):
         MockArticle.assert_called_once()
         result.save.assert_called_once()
 
+    @patch("services.data_service.Book")
+    def test_save_book(self, MockBook):
+        result = self.data_service.save_data(self.book)
+
+        MockBook.assert_called_once()
+        result.save.assert_called_once()
+
+    @patch("services.data_service.Inproceedings")
+    def test_save_inproceedings(self, MockInproceedings):
+        result = self.data_service.save_data(self.inproceedings)
+
+        MockInproceedings.assert_called_once()
+        result.save.assert_called_once()
+
     @patch("services.data_service.Entry")
     def test_data_service_delete_nonexistent(self, mock_entry):
         mock_entry.get.return_value = None
 
         with self.assertRaises(LookupError):
             self.data_service.delete_ref("9999")
+
+    @patch("services.data_service.Entry.get")
+    @patch("services.data_service.Entry.delete")
+    def test_data_service_delete(self, mock_entry_get, mock_entry_delete):
+        mock_entry_get.get.return_value = Article(
+            type="article",
+            citekey="456",
+            author="Author2",
+            title="Title2",
+            year="2021",
+            journal="Journal2",
+        )
+        self.data_service.delete_ref("example_citekey")
+        mock_entry_delete.assert_called_once()
 
     @patch("services.data_service.Entry")
     def test_reset_database(self, mock_entry):
@@ -103,3 +133,28 @@ class TestDataService(unittest.TestCase):
         ]
 
         self.assertEqual(bib_database.entries, expected_entries)
+
+    @patch(
+        "services.data_service.Path.cwd",
+        MagicMock(return_value=Path("/mocked/current/directory")),
+    )
+    @patch("services.data_service.DataService.get_all")
+    @patch("services.data_service.DataService.generate_bibs")
+    def test_save_as_bib(self, mock_get_all, mock_generate_bibs):
+        mock_get_all = Article(
+            type="article",
+            citekey="456",
+            author="Author2",
+            title="Title2",
+            year="2021",
+            journal="Journal2",
+        )
+        mock_generate_bibs.return_value = "mocked_bib_database"
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with patch(
+                "services.data_service.Path.cwd", MagicMock(return_value=Path(temp_dir))
+            ):
+                result = self.data_service.save_as_bib()
+                generated_path = Path(result)
+                self.assertTrue(generated_path.is_file())

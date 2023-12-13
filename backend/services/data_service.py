@@ -52,7 +52,7 @@ class DataService:
             file_path = Path.cwd() / "bibtex" / "output.bib"
         else:
             file_path = Path.cwd() / "backend" / "bibtex" / "output.bib"
-
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, "w") as bibfile:
             print(Path.cwd())
             writer = BibTexWriter()
