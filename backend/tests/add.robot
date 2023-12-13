@@ -18,37 +18,34 @@ User can add a valid article
     Set Author  Marshall Bruce Mathers III
     Set Journal  Jonne
     Set Year  69
-    #Set Number  3
-    #Set Pages  1-99
     Submit Reference
     Sleep  1
-    Row Count Should Be  1
+    Row Count Should Be  1  articlelist
     Empty The Table
 
-#User can add a valid Book
-#    Select Book
-#    Set Author   George R.R. Martin
-#    Set Title  Winds of Winter
-#    Set Publisher  Wonderland CORP 
-#    Set Adress  Quality Street 1
-#    Set Year  2023
+User can add a valid Book
+    Select Book
+    Set Citekey  3
+    Set Author   George RR Martin
+    Set Title  Winds of Winter
+    Set Publisher  Wonderland CORP 
+    Set Year  2023
+    Submit Reference
+    Row Count Should Be  1  booklist
+    Empty The Table
 
-#User can add a valid Booklet
-#    Select Booklet
-#    Set Title  Nursery Rhymes
-#    Set Author  Mary Poppins
-#    Set Howpublished  Fell from sky
-#    Set Month  Jul 
-#    Set Pages  3-5
+User can add a valid Inproceeding
+    Empty The Table
+    Select Inproceedings
+    Set Citekey  4
+    Set Title  Nursery Rhymes
+    Set Author  Mary Poppins
+    Set Year  1980
+    Set BookTitle  Filler
+    Submit Reference
+    Row Count Should Be  1  inproceedingslist
+    Empty The Table
 
-#User can add a valid MasterThesis
-#    Select MasterThesis
-#    Set Title  Sampo
-#    Set Author  Jami
-#    Set School  University of Helsinki
-#    Set Pages  2,4
-#    Set Publisher  WSOY.JAK
-#    Set Month  Jan
 
 
 

@@ -4,7 +4,6 @@ Library  ./AppLibrary.py
 Library    OperatingSystem
 Library    BuiltIn
 Library    Collections
-Library    XML
 *** Variables ***
 ${SERVER}  localhost:5173
 ${DELAY}  0.0 seconds
@@ -77,6 +76,10 @@ Set Citekey
     [Arguments]  ${citekey}
     Input Text  citekey  ${citekey}
 
+Set BookTitle
+    [Arguments]  ${BookTitle}
+    Input Text  booktitle  ${BookTitle}
+
 Set Year Filter
     [Arguments]  ${min}  ${max}
     Input Text  small_year  ${min}
@@ -122,15 +125,15 @@ Select Article
 
 Select Book
     Wait Until Element Is Visible    name:type
-    Select From List By Value       name:type     Book
+    Select From List By Value       name:type     book
 
 Select Booklet
     Wait Until Element Is Visible    name:type
     Select From List By Value       name:type     Booklet
 
-Select MasterThesis
+Select Inproceedings
     Wait Until Element Is Visible    name:type
-    Select From List By Value       name:type     MasterThesis
+    Select From List By Value       name:type     inproceedings
 
 Add Premade Article
     Select Article
@@ -140,8 +143,6 @@ Add Premade Article
     Set Author  Marshall Bruce Mathers III
     Set Journal  Jonne
     Set Year  70
-    #Set Number  3
-    #Set Pages  1-99
     Submit Reference
 
 Add Another Premade Article
@@ -152,27 +153,28 @@ Add Another Premade Article
     Set Author  Marshall Bruce Mathers III
     Set Journal  Jonne
     Set Year  71
-    #Set Number  3
-    #Set Pages  1-99
     Submit Reference
 
-
+Empty The Table With id
+    [Arguments]  ${id}
+    ${rows}=    Get Element Count    //table[@id="${id}"]/tbody/tr
+    FOR    ${row_num}    IN RANGE    1    ${rows+1}
+        ${button}=    Get WebElement   //table[@id="${id}"]/tbody/tr[1]/td[6]/button  
+        Click Element  ${button}
+        Sleep  100ms
+        Click Button   dialog-delete
+        Sleep  100ms
+    END
 
 Empty The table
-#when delete is fixed to update instantly change for loop to use 1 instead of row num
-    Wait Until Element Is Visible    id:entrylist
-    ${rows}=    Get Element Count    //table[@id="entrylist"]/tbody/tr
-    FOR    ${row_num}    IN RANGE    1    ${rows+1}
-        ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/td[6]/button  
-        Click Element  ${button}
-        Click Button    dialog-delete
-    END
-    Sleep  1
-    Go To Main Page
+    Empty The Table With id  articlelist
+    Empty The Table With id  booklist
+    Empty The Table With id  inproceedingslist
+    Sleep  100ms
 
 Delete one Row Without Affirmation
-    Wait Until Element Is Visible    id:entrylist
-    ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/td[6]/button  
+    Sleep  1
+    ${button}=    Get WebElement   //table[@id="articlelist"]/tbody/tr[1]/td[6]/button  
     Click Element  ${button} 
     Sleep  1
 
@@ -187,15 +189,15 @@ Confirm Deletion
     Sleep  1
 
 Delete One Row
-    Wait Until Element Is Visible    id:entrylist
-    ${button}=    Get WebElement   //table[@id="entrylist"]/tbody/tr[1]/td[6]/button  
+    Wait Until Element Is Visible    id:articlelist
+    ${button}=    Get WebElement   //table[@id="articlelist"]/tbody/tr[1]/td[6]/button  
     Click Element  ${button}
     Click Button    dialog-delete
 
     
 Check Table Row
     [Arguments]  ${selected_row}  ${expected_value}
-    @{cells}=    Get WebElements    //table[@id="entrylist"]/tbody/tr[${selected_row}]
+    @{cells}=    Get WebElements    //table[@id="articlelist"]/tbody/tr[${selected_row}]
     ${data}=    Create List
     FOR    ${cell}    IN    @{cells}
         Sleep    1s
@@ -208,12 +210,12 @@ Check Table Row
     Should Be Equal As Strings  ${data}   ${expected_value}
 
 Row Count Should Be
-    [Arguments]  ${expected_value}
-    ${rows}=    Get Element Count    //table[@id="entrylist"]/tbody/tr
+    [Arguments]  ${expected_value}  ${id}
+    ${rows}=    Get Element Count    //table[@id='${id}']/tbody/tr
     Should Be Equal As Strings  ${rows}   ${expected_value}
 
 Table Should Be Empty
-    Row Count Should Be  0
+    Row Count Should Be  0  articlelist
 
 Add Article By Values
     Sleep    100ms
@@ -225,9 +227,8 @@ Add Article By Values
     Set Author  ${author}
     Set Year  ${year}
     Set Journal  ${journal}
-    Set Year  ${year}
     Submit Reference
-
+    sleep  100ms
 Mass Add Articles
     Add Article By Values  AP_news1  No. 8 Alabama knocks off No. 1 Georgia 27-24 for SEC title. Both teams await postseason fate  PAUL NEWBERRY  2023  Associated Press
 
@@ -242,6 +243,47 @@ Mass Add Articles
     Add Article By Values  AP_news5  Breakthrough in Medical Research: Promising Treatment for Common Cold Discovered. Potential global impact.  EMMA MARTIN  2020  Associated Press
 
     Add Article By Values  AP_news6  NASA Announces Successful Launch of Next-Generation Space Telescope. Astronomers eager for new discoveries.  JASON ADAMS  2023  Associated Press
+
+Add Book By Values
+    [Arguments]  ${citekey}  ${title}  ${author}  ${year}  ${publisher}
+    Select Book
+    Sleep  100ms
+    Set Citekey  ${citekey}
+    Set Title  ${title}
+    Set Author  ${author}
+    Set Year  ${year}
+    Set Publisher  ${publisher}
+    Submit Reference
+    sleep  100ms
+
+Mass Add Books
+    Add Book By Values  978-0-306-40615-7  "The Great Gatsby"  F. Scott Fitzgerald  1925  Scribner
+    Add Book By Values  978-0-547-57886-0  "To Kill a Mockingbird"  Harper Lee  1960  JB Lippincott & Co
+    Add Book By Values  978-0-141-18202-6  "1984"  George Orwell  1949  Secker & Warburg
+    Add Book By Values  978-0-395-78846-0  "Pride and Prejudice"  Jane Austen  1813  T Egerton
+    Add Book By Values  978-1-4027-6719-0  "Harry Potter and the Sorcerer's Stone"  JK Rowling  1997  Bloomsbury
+    Add Book By Values  978-0-06-112008-4  "The Catcher in the Rye"  JD Salinger  1951  Little, Brown and Company
+
+Add Inproceedings By Values
+    [Arguments]  ${key}  ${title}  ${author}  ${year}  ${booktitle}
+    Select Inproceedings
+    Sleep  100ms
+    Set Citekey  ${key}
+    Set Title  ${title}
+    Set Author  ${author}
+    Set Year  ${year}
+    Set BookTitle  ${booktitle}
+    Submit Reference
+    sleep  100ms
+Mass Add Inproceedings
+    Add Inproceedings By Values  ICY_2023  "Ice Cream Yodeling"  Ben Gelato  2023  "Proceedings of the International Symposium on Frozen Delights"
+    Add Inproceedings By Values  ROFL_2022  "Rolling on the Floor Laughing"  Ha Ha  2022  "Laughter Conference 2022"
+    Add Inproceedings By Values  WIZARD_2021  "Wizardry and Spells: A Comprehensive Guide"  Merlin Magic  2021  "Book of Magic Spells"
+    Add Inproceedings By Values  TECH_2020  "Tech Trends: From AI to Zoom"  Byte Byteson  2020  "Conference on Cutting-Edge Technology"
+    Add Inproceedings By Values  UFO_2019  "Unidentified Flying Objects: A Closer Look"  ET Explorer  2019  "Extraterrestrial Symposium"
+    Add Inproceedings By Values  TACO_2018  "Tacos: The Ultimate Culinary Experience"  Salsa Sanchez  2018  "Taco Fiesta Proceedings"
+
+
 
 Filter By Year
     [Arguments]  ${minvalue}  ${maxvalue}
@@ -264,7 +306,7 @@ Check If File Downloaded
     ${file_exists}=    Run Keyword And Return Status    Test File Exists    ${HOME}/Downloads/output.bib
     Run Keyword If    not ${file_exists}    Log    File not downloaded yet
     File Should Exist    ${HOME}/Downloads/output.bib
-    #[Return]    ${result}
+
 
 Test File Exists
     [Arguments]    ${file_path}
@@ -277,3 +319,7 @@ File Should Be Correctly Formatted
     ${expected_content}  Get File  ${CURDIR}/sample.bib 
     Should Be Equal As Strings    ${file_content}    ${expected_content}
 
+Delete The File
+#Komento hakee tietokoneen juuresta kansion download. jos path ei toimi nii muuta se koneesi omaan download folder pathiin
+    Set Global Variable    ${file_path}      ~${/}downloads${/}output.bib
+    Remove File  ${file_path}

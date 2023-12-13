@@ -15,19 +15,19 @@ User can remove added entries
 
 The Removed Entries Are Deleted In Real Time
     Mass Add Articles
-    Row Count Should Be  7
+    Row Count Should Be  7  articlelist
     Delete One Row
-    Row Count Should Be  6
+    Row Count Should Be  6  articlelist
     Delete One Row
-    Row Count Should Be  5
+    Row Count Should Be  5  articlelist
     Delete One Row
-    Row Count Should Be  4
+    Row Count Should Be  4  articlelist
     Delete One Row
-    Row Count Should Be  3
+    Row Count Should Be  3  articlelist
     Delete One Row
-    Row Count Should Be  2
+    Row Count Should Be  2  articlelist
     Delete One Row
-    Row Count Should Be  1
+    Row Count Should Be  1  articlelist
     Delete One Row
 
 Upon Removal The User Is Alerted If They Are Sure Of The Deletion

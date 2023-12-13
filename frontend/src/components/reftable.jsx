@@ -70,7 +70,7 @@ export default function Reftable ({refs, setRefs, setAlert}) {
         return(
         <Container className="border py-2 my-2 rounded"> 
             <h5> {type} </h5>
-            <Table striped id="entrylist"> 
+            <Table striped id={type + 'list'}> 
                 <thead> 
                     <tr>
                         {headers.map((r) => <th key={r}>{r}</th>)}
