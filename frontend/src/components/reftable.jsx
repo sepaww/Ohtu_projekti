@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Table, Button, Badge} from "react-bootstrap"
+import { Table, Button, Badge, Container} from "react-bootstrap"
 import { useState } from "react"
 import Toolbar from "./toolbar"
 import DeleteModal from "./delete"
@@ -60,11 +60,16 @@ export default function Reftable ({refs, setRefs, setAlert}) {
         setPrevLimits(limits)
     }
 
-    const headers = ["author", "journal", "title", "year", "citekey"] // ordering is fixed here
+    const headers = {article: ["author", "journal", "title", "year", "citekey"],
+                     book: ["author", "publisher", "title", "year", "citekey"],
+                     inproceedings: ["author", "booktitle", "title", "year", "citekey"]}
 
-    return (
-        <div> 
-            <Toolbar filters={filters} setFilters={setFilters} limits={limits}>  </Toolbar>
+    const TableEntry = ({headers, type}) => {
+        const refstodisplay = refs.filter((r) => r.type === type)
+        if (refstodisplay.length === 0) return 
+        return(
+        <Container className="border py-2 my-2 rounded"> 
+            <h5> {type} </h5>
             <Table striped id="entrylist"> 
                 <thead> 
                     <tr>
@@ -73,12 +78,23 @@ export default function Reftable ({refs, setRefs, setAlert}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {refs.filter(r => filterCriterion(filters, r)).map((reference) => 
+                    {refstodisplay.filter(r => filterCriterion(filters, r)).map((reference) => 
                     <RefRow key={reference.citekey} reference={reference} setToBeDeleted={setToBeDeleted} headers={headers}/>
                     )}                    
                 </tbody>
             </Table>
             <DeleteModal toBeDeleted={toBeDeleted} setToBeDeleted={setToBeDeleted} refs={refs} setRefs={setRefs} setAlert={setAlert}/>
-        </div>
+        </Container>
+        )
+    }
+
+    return (
+    <div> 
+      <Toolbar filters={filters} setFilters={setFilters} limits={limits}/>  
+          {Object.keys(headers).map((type => 
+            <TableEntry key={type} headers={headers[type]} type={type}/>))}
+    </div>
+    
     )
+
 }
