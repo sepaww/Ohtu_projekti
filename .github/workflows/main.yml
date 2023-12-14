@@ -48,13 +48,12 @@ jobs:
       - name: Setup geckodriver
         uses: browser-actions/setup-geckodriver@latest
       - name: Run robot tests
+        run: bash robot_script.sh
+        env:
+          DATABASE_URI: postgresql://postgres:postgres@localhost/postgres
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
-
-        run: bash robot_script.sh
-        env:
-          DATABASE_URI: postgresql://postgres:postgres@localhost/postgres
