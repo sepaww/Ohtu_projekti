@@ -1,6 +1,6 @@
 import unittest
-from unittest.mock import patch, Mock, MagicMock, mock_open
-from services.data_service import DataService, Entry, Article, Book
+from unittest.mock import patch, Mock, MagicMock
+from services.data_service import DataService, Article
 from pathlib import Path
 import tempfile
 
